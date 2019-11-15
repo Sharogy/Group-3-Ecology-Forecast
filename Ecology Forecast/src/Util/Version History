@@ -7,6 +7,7 @@ Added Setting for datapath
 Added Version history
 Added README file
 Added Add/Edit/Remove function for Animal control
+Changed Gridpane to tableview for animal display
 
 V1.0
 Added basic layout, menu, animal control. 
