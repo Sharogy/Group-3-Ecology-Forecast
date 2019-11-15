@@ -1,0 +1,13 @@
+Version Update: V1.1
+
+V1.1
+Added Alertbox
+Seperated Datamining into its own class
+Added Setting for datapath
+Added Version history
+Added README file
+Added Add/Edit/Remove function for Animal control
+
+V1.0
+Added basic layout, menu, animal control. 
+Added data extraction from excel
