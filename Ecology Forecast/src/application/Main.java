@@ -3,35 +3,57 @@ package application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.animaleditcontroller;
+import view.deletelayoutcontroller;
 import view.rootcontroller;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+
+import Util.AlertBox;
+import Util.Settings;
+
+import model.Animal;
+import model.AnimalFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
-
+//Initial Stage setup
 public class Main extends Application {
 
     public Stage primaryStage;
     private BorderPane rootLayout;
-    private static final String data = "C:\\Users\\Shar\\Documents\\Java\\CSV\\Eco Data\\Ecodata.xlsx";
+    private boolean running;
+    private rootcontroller controller;
+    private ObservableList<Animal> animallist = FXCollections.observableArrayList();
 
+    public Main()
+    {
+    	AnimalFactory af = AnimalFactory.getInstance();
+    	animallist = af.getAnimals();
+    }
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Ecology Animal Population Forecast");
 
         initRootLayout();
-        
-        
-        
+        this.primaryStage.setOnCloseRequest(e -> {
+        	e.consume();
+        	safeExit();
+        });
+               
     }
     
     /**
@@ -49,50 +71,71 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
             
-            rootcontroller controller = loader.getController();
+            controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Shows the person overview inside the root layout.
-     */
-    public static String[][] getData() throws IOException, InvalidFormatException {
-    	Workbook workbook = WorkbookFactory.create(new File(data));
-    	
-    	Sheet sheet = workbook.getSheetAt(0);
-    	
-        // Create a DataFormatter to format and get each cell's value as String
-        DataFormatter dataFormatter = new DataFormatter();
-
-        // 1. You can obtain a rowIterator and columnIterator and iterate over them
-        System.out.println("\n\nIterating over Rows and Columns using Iterator\n");
-        Iterator<Row> rowIterator = sheet.rowIterator();
-        
-        String[][] dataarray = new String[sheet.getPhysicalNumberOfRows()][5];       
-        int rownum = 0;
-        int colnum = 0;
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-
-            // Now let's iterate over the columns of the current row
-            Iterator<Cell> cellIterator = row.cellIterator();
-            colnum = -1;
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                String cellValue = dataFormatter.formatCellValue(cell);
-                //System.out.print(cellValue + "\t");
-                colnum = colnum+1;
-                dataarray[rownum][colnum] = cellValue;                         
-            }
-            //System.out.println();
-            rownum = rownum+1;
+    
+    public void showDeleteAnimals()
+    {
+    	try
+    	{
+    		FXMLLoader loader = new FXMLLoader();
+    		loader.setLocation(getClass().getResource("/view/deletelayout.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            
+            Stage deletestage = new Stage();
+            deletestage.setTitle("Deleting Animals");
+            deletestage.initModality(Modality.WINDOW_MODAL);
+            deletestage.initOwner(primaryStage);
+            
+            Scene scene = new Scene(page);
+            deletestage.setScene(scene);
+            
+            deletelayoutcontroller controller = loader.getController();
+            controller.setDeletestage(deletestage);
+            controller.deleteAnimal();
+            controller.setMainApp(this);
+            
+            deletestage.showAndWait();
+    		
+    	} catch (IOException e) {
+            e.printStackTrace();
         }
-        workbook.close();
-        return dataarray;
-    	
+    }
+    
+    public boolean showEditAnimals(Animal animal)
+    {
+    	try
+    	{
+    		FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/animaleditlayout.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage editStage = new Stage();
+            editStage.setTitle("Edit Animal");
+            editStage.initModality(Modality.WINDOW_MODAL);
+            editStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            editStage.setScene(scene);
+
+            // Set the person into the controller.
+            animaleditcontroller controller = loader.getController();
+            controller.setDialogStage(editStage);
+            controller.setAnimal(animal);
+
+            // Show the dialog and wait until the user closes it
+            editStage.showAndWait();
+
+            return controller.isOkClicked();
+    	}
+    	catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public Stage getPrimaryStage() {
@@ -102,5 +145,26 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void safeExit()
+    {
+    	Boolean answer = AlertBox.display("Exiting Program", "Are you sure you want to exit?");
+    	if (answer)
+    	{
+        	running = false;
+        	this.primaryStage.close();
+        	System.exit(0); 		
+    	}
+    }
+    
+    public rootcontroller getRoot()
+    {
+    	return controller;
+    }
+    
+    public ObservableList<Animal> getAnimals()
+    {
+    	return animallist;
     }
 }
