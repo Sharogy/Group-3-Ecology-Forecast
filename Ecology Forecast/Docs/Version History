@@ -1,4 +1,12 @@
-Version Update: V1.2
+Version Update: V1.3
+
+V1.3
+Added Import and Export file support (excel file format)
+Added New clean sheet function
+Added Datawriter class
+Cleaned up data reading sequence.
+Fixed adding animal function.
+Setting.java is now obsolete.
 
 V1.2
 Created a seperate folder for Documents.

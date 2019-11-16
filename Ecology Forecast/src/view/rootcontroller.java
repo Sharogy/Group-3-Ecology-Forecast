@@ -1,5 +1,8 @@
 package view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,23 +25,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import model.Animal;
+import model.AnimalFactory;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import Util.AlertBox;
 import Util.Dataminer;
+import Util.Datawriter;
 import application.Main;
 import Util.AlertBox;
 
 
 public class rootcontroller {
 	
-	private String[][] data;
-	private static String[][] tempdata;
-
     @FXML
     private GridPane population;
     
@@ -76,6 +81,10 @@ public class rootcontroller {
     private Main main;
     
     private static rootcontroller root = null;
+    
+    private ObservableList<Animal> animallist;
+    
+    public static Boolean addoredit;
 
     /**
      * The constructor.
@@ -142,40 +151,41 @@ public class rootcontroller {
     	
     	
         this.main = main;
-        animalTable.setItems(main.getAnimals());
         
-        main.primaryStage.setResizable(false);
+        main.getPrimaryStage().setResizable(false);
         
         rightnavigation.lookupAll(".split-pane-divider").stream()
         .forEach(div ->  div.setMouseTransparent(true) );
         
         scenenavigation.lookupAll(".split-pane-divider").stream()
-        .forEach(div ->  div.setMouseTransparent(true) );  
+        .forEach(div ->  div.setMouseTransparent(true) ); 
         
+        animallist = main.getAnimals();
+        animalTable.setItems(animallist);
+
     }
     
     @FXML
     private void handleAddAnimal()
     {
     	Animal tempanimal = new Animal();
+    	addoredit = true;
         boolean okClicked = main.showEditAnimals(tempanimal);
-        System.out.println(okClicked);
-        //if (okClicked) {
-         //   main.getAnimals().add(tempanimal);
-        //}
-    	
+        if (okClicked) {
+            main.getAnimals().add(tempanimal);
+        }        
     }
     
     @FXML
     private void handleEditAnimal()
     {
     	Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+    	addoredit = false;
         if (selectedAnimal != null) {
             boolean okClicked = main.showEditAnimals(selectedAnimal);
             if (okClicked) {
                 showAnimalDetails(selectedAnimal);
             }
-
         } else {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
@@ -225,14 +235,45 @@ public class rootcontroller {
     	}
     }
       
-        
-    public static String[][] getData()
+            
+    @FXML
+    private void handleNew()
     {
-    	return tempdata;
+    	main.getAnimals().clear();
+    	main.setAnimalFilePath(null);
     }
     
-    public static void setData(String[][] data)
+    @FXML
+    private void handleImport()
     {
-    	tempdata = data;
+    	FileChooser fileChooser = new FileChooser();
+    	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx");
+    	fileChooser.getExtensionFilters().add(extFilter);
+    	
+    	File file = fileChooser.showOpenDialog(main.getPrimaryStage());
+    	
+    	if (file != null)
+    	{
+    		main.loadAnimalDataFromFile(file);
+    	}
+    }
+    
+    @FXML
+    private void handleExport()
+    {
+    	FileChooser fileChooser = new FileChooser();
+    	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx");
+    	fileChooser.getExtensionFilters().add(extFilter);
+    	
+    	File file = fileChooser.showSaveDialog(main.getPrimaryStage());
+    	
+    	if (file!=null)
+    	{
+    		if (!file.getPath().endsWith(".xlsx"))
+    		{
+    			file = new File(file.getPath() + ".xlsx");
+    		}
+    		main.saveAnimalDataToFile(file);
+    	}    	
     }
 }

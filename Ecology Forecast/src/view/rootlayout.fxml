@@ -20,8 +20,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Import" />
-                  <MenuItem mnemonicParsing="false" text="Export" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New sim" />
+              <MenuItem mnemonicParsing="false" onAction="#handleImport" text="Import" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExport" text="Export" />
                   <MenuItem mnemonicParsing="false" text="placeholder" />
             </items>
           </Menu>

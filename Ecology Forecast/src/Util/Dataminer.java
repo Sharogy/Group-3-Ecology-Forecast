@@ -13,9 +13,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class Dataminer {
-	private static final String data = Settings.datapath;
+	private static String datapath = Settings.datapath;
+	
+	
+	public static void setpath(String path)
+	{
+		datapath = path;
+	}
+	
 	public static String[][] getData() throws IOException, InvalidFormatException {
-    	Workbook workbook = WorkbookFactory.create(new File(data));
+    	Workbook workbook = WorkbookFactory.create(new File(datapath));
     	
     	Sheet sheet = workbook.getSheetAt(0);
     	

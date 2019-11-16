@@ -77,19 +77,33 @@ public class animaleditcontroller {
     @FXML
     private void handleConfirm() {
         if (isInputValid()) {
-        	Boolean answer = AlertBox.display("Editing Animals", "Are you sure you want to edit?");
-        	if (answer)
+        	if (!rootcontroller.addoredit)
+        	{
+        		Boolean answer = AlertBox.display("Editing Animals", "Are you sure you want to edit?");
+        		if (answer)
+        		{
+        			animal.setName(nameField.getText());
+        			animal.setNumber(Integer.valueOf(totalField.getText()));
+        			animal.setGrowthrate(Double.valueOf(growthField.getText()));
+        			animal.setDeathrate(Double.valueOf(deathField.getText()));
+        			animal.setConsumptionrate(Double.valueOf(consumptionField.getText()));
+        			
+        			okClicked = true;
+        			dialogStage.close();
+        		}   
+        	}
+        	else if (rootcontroller.addoredit)
         	{
         		animal.setName(nameField.getText());
                 animal.setNumber(Integer.valueOf(totalField.getText()));
                 animal.setGrowthrate(Double.valueOf(growthField.getText()));
                 animal.setDeathrate(Double.valueOf(deathField.getText()));
                 animal.setConsumptionrate(Double.valueOf(consumptionField.getText()));
-                
+                    
                 okClicked = true;
                 dialogStage.close();
-        	}     
-        }
+        	}
+       	}
     }
 
     /**
