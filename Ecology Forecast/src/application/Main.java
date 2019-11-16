@@ -49,7 +49,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Ecology Animal Population Forecast");
+        this.primaryStage.setTitle("Animal Population Forecast");
 
         initRootLayout();
         this.primaryStage.setOnCloseRequest(e -> {
@@ -233,12 +233,12 @@ public class Main extends Application {
             prefs.put("filePath", file.getPath());
 
             // Update the stage title.
-            primaryStage.setTitle("AddressApp - " + file.getName());
+            primaryStage.setTitle("Animal Population Forecast - " + file.getName());
         } else {
             prefs.remove("filePath");
 
             // Update the stage title.
-            primaryStage.setTitle("AddressApp");
+            primaryStage.setTitle("Animal Population Forecast");
         }
     }
 }

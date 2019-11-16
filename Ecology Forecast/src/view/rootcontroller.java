@@ -29,6 +29,7 @@ import javafx.stage.FileChooser;
 import model.Animal;
 import model.AnimalFactory;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -275,5 +276,28 @@ public class rootcontroller {
     		}
     		main.saveAnimalDataToFile(file);
     	}    	
+    }
+    
+    @FXML
+    private void handleAbout()
+    {
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setTitle("Animal Population Forecast");
+    	alert.setHeaderText("This program is developed for the nature reserve Oostvaardersplassen.");
+    	alert.setContentText("Author: Ke Zhang\nStudentID: 607759\nFaculty: Inholland Diemen");
+    	alert.showAndWait();
+    }
+    
+    @FXML
+    private void handleManual()
+    {
+    	if (Desktop.isDesktopSupported()) {
+    	    try {
+    	        File myFile = new File("Docs/Manual.pdf");
+    	        Desktop.getDesktop().open(myFile);
+    	    } catch (IOException ex) {
+    	        // no application registered for PDFs
+    	    }
+    	}
     }
 }

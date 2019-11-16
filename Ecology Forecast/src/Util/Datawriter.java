@@ -30,10 +30,6 @@ public class Datawriter {
     	// Create a Workbook
         Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
 
-        /* CreationHelper helps us create instances of various things like DataFormat, 
-           Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
-        CreationHelper createHelper = workbook.getCreationHelper();
-
         // Create a Sheet
         Sheet sheet = workbook.createSheet("Animals");
 
