@@ -2,8 +2,10 @@ package view;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -15,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
@@ -49,7 +52,7 @@ public class rootcontroller {
     private SplitPane rightnavigation;
     
     @FXML
-    private AnchorPane animalmenu;
+    private AnchorPane blackboard;
     
     @FXML
     private AnchorPane functionmenu;
@@ -93,15 +96,43 @@ public class rootcontroller {
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
+     * @throws IOException 
      */
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
     	animalnameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
     	animaltotalColumn.setCellValueFactory(cellData -> cellData.getValue().totalProperty());
     	
     	showAnimalDetails(null);
     	
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
+    	
+    	loadblackboard();
+    	
+    }
+    
+    //Populate the blackboard
+    @FXML
+    private void loadblackboard() throws IOException
+    {
+    	
+    	FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+        blackboard.getChildren().setAll(pane);  	
+                
+    }
+    
+    @FXML
+    private void startsimulation()
+    {
+    	lineviewlayoutcontroller.spawndata();
+    }
+    
+    @FXML
+    private void clearsimulation()
+    {
+    	lineviewlayoutcontroller.cleardata();
     }
     
 

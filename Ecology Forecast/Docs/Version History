@@ -1,4 +1,9 @@
-Version Update: V1.1
+Version Update: V1.2
+
+V1.2
+Created a seperate folder for Documents.
+added linechart
+added plot function and clear plot function
 
 V1.1
 Added Alertbox
