@@ -79,6 +79,8 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        File file = getAnimalFilePath();
     }
     
     public void showDeleteAnimals()
@@ -178,6 +180,8 @@ public class Main extends Application {
             AnimalFactory af = AnimalFactory.getInstance();
             animallist.addAll(af.getAnimals());
             
+            setAnimalFilePath(file);
+            
         } catch (Exception e) { // catches ANY exception
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -185,6 +189,7 @@ public class Main extends Application {
             alert.setContentText("Could not load data from file:\n" + file.getPath());
 
             alert.showAndWait();
+        	e.printStackTrace();
         }
     }
 
