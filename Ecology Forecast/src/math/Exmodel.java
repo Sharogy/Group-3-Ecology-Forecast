@@ -39,7 +39,7 @@ public class Exmodel {
 	public static void Main(String argz)
 	{
 		Exmodel a = new Exmodel();
-		a.calculate(oldpop, growth, death, densitygrowth, densitydeath);
+		//a.calculate(oldpop, growth, death, densitygrowth, densitydeath);
 		
 	}
 

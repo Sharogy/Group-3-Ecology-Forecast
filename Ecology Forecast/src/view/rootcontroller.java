@@ -11,9 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,12 +28,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import model.Animal;
 import model.AnimalFactory;
+import model.SliderCell;
 
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.prefs.Preferences;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -69,6 +74,8 @@ public class rootcontroller {
     private TableColumn<Animal, String> animalnameColumn;
     @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
+    @FXML
+    private TableColumn sliderColumn;
     
     @FXML
     private Label growthdata;
@@ -119,6 +126,8 @@ public class rootcontroller {
     	
     	loadblackboard();
     	
+    	
+    	
     }
     
     //Populate the blackboard
@@ -163,10 +172,15 @@ public class rootcontroller {
         
         animallist = main.getAnimals();
         animalTable.setItems(animallist);
-
+        
+       
+        
+        
     }
     
-    @FXML
+   
+
+	@FXML
     private void handleAddAnimal()
     {
     	Animal tempanimal = new Animal();
@@ -257,6 +271,7 @@ public class rootcontroller {
     	{
     		main.loadAnimalDataFromFile(file);
     	}
+    	
     }
     
     @FXML
