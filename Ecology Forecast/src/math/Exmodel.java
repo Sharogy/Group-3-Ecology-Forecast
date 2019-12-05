@@ -24,33 +24,3 @@ public class Exmodel {
 			time++;
 			System.out.println(calculation);
 		
-		
-//		int something = oldpop;
-		// IMPLEMENT THE CALCULATION
-		
-//		return something;
-//	}
-	
-	//CACulate for a periode of time
-//	public List longcalculation(int time)
-//	{
-		//RECURSIVE FUNCTION BASED ON TIME
-		
-//		List a = new ArrayList(time);
-		
-		
-		
-	
-		
-		
-		return a;
-	}
-	
-	public static void Main(String argz)
-	{
-		Exmodel a = new Exmodel();
-		a.calculate(oldpop, growth, death, densitygrowth, densitydeath);
-		
-	}
-
-}
