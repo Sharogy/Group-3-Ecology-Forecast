@@ -63,7 +63,7 @@ public class rootcontroller {
     private SplitPane rightnavigation;
     
     @FXML
-    private AnchorPane blackboard;
+    private AnchorPane drawingboard;
     
     @FXML
     private AnchorPane functionmenu;
@@ -93,6 +93,16 @@ public class rootcontroller {
     private ObservableList<Animal> animallist;
     
     public static Boolean addoredit;
+    
+    private FXMLLoader lineloader;
+    private FXMLLoader pieloader;
+    private FXMLLoader barloader;
+    private FXMLLoader statloader;
+    
+    private AnchorPane linepane;
+    private AnchorPane piepane;
+    private AnchorPane barpane;
+    private AnchorPane statpane;
 
     /**
      * The constructor.
@@ -124,34 +134,49 @@ public class rootcontroller {
     	
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
-    	loadblackboard();
-    	
+    	loaddrawingboard();
+    	loadview(lineloader, linepane);
     	
     	
     }
     
     //Populate the blackboard
     @FXML
-    private void loadblackboard() throws IOException
+    private void loaddrawingboard() throws IOException
     {
     	
-    	FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
-        AnchorPane pane = (AnchorPane) loader.load();
-        blackboard.getChildren().setAll(pane);  	
+    	lineloader = new FXMLLoader();
+        lineloader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
+        pieloader = new FXMLLoader();
+        pieloader.setLocation(getClass().getResource("/view/pieviewlayout.fxml"));
                 
+        linepane = (AnchorPane) lineloader.load();
+        piepane = (AnchorPane) pieloader.load();
+  	           
     }
+
+    
+    private void loadview(FXMLLoader loader, AnchorPane pane)
+    {
+    	drawingboard.getChildren().setAll(pane); 	
+    }
+    
+    
     
     @FXML
     private void startsimulation()
     {
     	lineviewlayoutcontroller.spawndata();
+    	pieviewlayoutcontroller.spawndata();
+    	
+    	
     }
     
     @FXML
     private void clearsimulation()
     {
     	lineviewlayoutcontroller.cleardata();
+    	pieviewlayoutcontroller.cleardata();
     }
     
 
@@ -172,13 +197,11 @@ public class rootcontroller {
         
         animallist = main.getAnimals();
         animalTable.setItems(animallist);
-        
-       
-        
-        
+             
     }
     
    
+    // NAVIGATION BOARD FUNCTIONS
 
 	@FXML
     private void handleAddAnimal()
@@ -250,7 +273,10 @@ public class rootcontroller {
     	}
     }
       
-            
+         
+    
+    // FILE FUNCTIONS
+    
     @FXML
     private void handleNew()
     {
@@ -292,6 +318,32 @@ public class rootcontroller {
     		main.saveAnimalDataToFile(file);
     	}    	
     }
+    
+    
+    // VIEW FUNCTIONS
+    @FXML
+    private void handlelineView()   
+    {
+    	loadview(lineloader, linepane);
+    }
+    @FXML
+    private void handlepieView()   
+    {
+    	loadview(pieloader, piepane);
+    }
+    @FXML
+    private void handlebarView()   
+    {
+    	System.out.println("barview");
+    }
+    @FXML
+    private void handlestatView()   
+    {
+    	System.out.println("statview");
+    }
+  
+    
+    // HELP FUNCTIONS
     
     @FXML
     private void handleAbout()

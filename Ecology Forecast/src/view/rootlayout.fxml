@@ -28,8 +28,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
-              <MenuItem mnemonicParsing="false" text="Line Chart" />
-                  <MenuItem mnemonicParsing="false" text="Pie Chart" />
+              <MenuItem mnemonicParsing="false" onAction="#handlelineView" text="Line Chart" />
+              <MenuItem mnemonicParsing="false" onAction="#handlepieView" text="Pie Chart" />
+              <MenuItem mnemonicParsing="false" onAction="#handlebarView" text="Bar Chart" />
+              <MenuItem mnemonicParsing="false" onAction="#handlestatView" text="Stat Chart" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -44,7 +46,7 @@
    <center>
       <SplitPane fx:id="scenenavigation" dividerPositions="0.7504173622704507" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane fx:id="blackboard" minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" />
+          <AnchorPane fx:id="drawingboard" minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" />
           <AnchorPane minHeight="750.0" minWidth="300.0" prefHeight="750.0" prefWidth="300.0">
                <children>
                   <SplitPane fx:id="rightnavigation" dividerPositions="0.6499339498018494" layoutX="54.0" layoutY="151.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

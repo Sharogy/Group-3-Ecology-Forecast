@@ -34,9 +34,6 @@ public class lineviewlayoutcontroller {
     @FXML
     private NumberAxis yAxis;
 
-    private ObservableList<String> Names = FXCollections.observableArrayList();
-    private Main main;
-    private static lineviewlayoutcontroller lvlcontroller;
     
     public static XYChart.Series series;
     public static String test = "test string";
@@ -49,16 +46,7 @@ public class lineviewlayoutcontroller {
     {
     	
     }
-    
-    public static lineviewlayoutcontroller getInstance()
-    {
-    	if (lvlcontroller != null)
-    	{
-    		lvlcontroller = new lineviewlayoutcontroller();
-    	}
-    	return lvlcontroller;
-    }
-    
+
     @FXML
     private void initialize() {
         // Get the animals 
