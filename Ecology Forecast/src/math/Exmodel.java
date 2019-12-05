@@ -23,7 +23,7 @@ public class Exmodel {
 			calculation.add(newpop);
 			time++;
 			System.out.println(calculation);
-		
+		 
 		}
 	}
 }
