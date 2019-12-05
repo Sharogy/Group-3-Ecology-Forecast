@@ -85,9 +85,9 @@ public class barviewlayoutcontroller {
 	
 	public static void cleardata()
 	{
-		series1.getData().clear();
-		series2.getData().clear();
-		series3.getData().clear();
+		series1.getData().forEach(a -> a.setYValue(0));
+		series2.getData().forEach(a -> a.setYValue(0));
+		series3.getData().forEach(a -> a.setYValue(0));
 	}
 
 }

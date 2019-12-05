@@ -208,6 +208,12 @@ public class rootcontroller {
     
    
     // NAVIGATION BOARD FUNCTIONS
+    
+    @FXML
+    private void handleloadpreset()
+    {
+    	main.loadAnimalPreset("Eco Data\\Ecodata.xlsx");
+    }
 
 	@FXML
     private void handleAddAnimal()
@@ -246,9 +252,11 @@ public class rootcontroller {
     private void handleDeleteAnimal()
     {
     	int selectedIndex = animalTable.getSelectionModel().getSelectedIndex();
+    	Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
     	if (selectedIndex >=0)
     	{
-    	animalTable.getItems().remove(selectedIndex);
+    	animalTable.getItems().remove(selectedIndex);	
+    	animallist.remove(selectedAnimal);
     	}
     	else
     	{

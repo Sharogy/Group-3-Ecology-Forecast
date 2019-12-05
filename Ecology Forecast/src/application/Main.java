@@ -192,6 +192,15 @@ public class Main extends Application {
         	e.printStackTrace();
         }
     }
+    
+    public void loadAnimalPreset(String path)
+    {
+    	
+    	Dataminer.setpath(path);
+    	AnimalFactory af = AnimalFactory.getInstance();
+    	animallist.clear();
+        animallist.addAll(af.getAnimals());
+    }
 
     /**
      * Saves the current person data to the specified file.

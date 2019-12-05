@@ -69,6 +69,7 @@
                                     <TableColumn fx:id="animaltotalColumn" minWidth="0.0" prefWidth="50.0" text="Total" />
                                 </columns>
                               </TableView>
+                              <Button layoutX="191.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleloadpreset" prefHeight="25.0" prefWidth="89.0" text="Load Preset" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="294.0">

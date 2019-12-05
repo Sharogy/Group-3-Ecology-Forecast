@@ -30,6 +30,7 @@ public class AnimalFactory {
 	
 	public ObservableList<Animal> getAnimals()
 	{
+		animallist.clear();
 		try {
 			String[][] data = Dataminer.getData();
 			for (int i = 1; i<data.length; i++)
