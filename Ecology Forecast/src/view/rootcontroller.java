@@ -149,9 +149,13 @@ public class rootcontroller {
         lineloader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
         pieloader = new FXMLLoader();
         pieloader.setLocation(getClass().getResource("/view/pieviewlayout.fxml"));
+        barloader = new FXMLLoader();
+        barloader.setLocation(getClass().getResource("/view/barviewlayout.fxml"));
+              
                 
         linepane = (AnchorPane) lineloader.load();
         piepane = (AnchorPane) pieloader.load();
+        barpane = (AnchorPane) barloader.load();
   	           
     }
 
@@ -168,6 +172,7 @@ public class rootcontroller {
     {
     	lineviewlayoutcontroller.spawndata();
     	pieviewlayoutcontroller.spawndata();
+    	barviewlayoutcontroller.spawndata();
     	
     	
     }
@@ -177,6 +182,7 @@ public class rootcontroller {
     {
     	lineviewlayoutcontroller.cleardata();
     	pieviewlayoutcontroller.cleardata();
+    	barviewlayoutcontroller.cleardata();
     }
     
 
@@ -334,7 +340,7 @@ public class rootcontroller {
     @FXML
     private void handlebarView()   
     {
-    	System.out.println("barview");
+    	loadview(barloader, barpane);
     }
     @FXML
     private void handlestatView()   
