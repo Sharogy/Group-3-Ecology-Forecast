@@ -5,28 +5,38 @@ import java.util.List;
 
 public class Exmodel {
 	
-	private int newpop;
-	private int oldpop;
-	private double growth;
+	private double newpop;
+	private double oldpop;
+	private double birth;
 	private double death;
-	private double densitygrowth;
-	private double densitydeath;
 	private int timeperiode;
 	
-	public int calculate(int oldpop, double growth, double death, double densitygrowth, double densitydeath)
+	public int calculate(int oldpop, double birth, double death, int timeperiode)
 	{
-		int something = oldpop;
+		
+		double r = birth - death;
+		int time = 1;
+		List calculation = new ArrayList(timeperiode);
+		while (time <= timeperiode) {
+			double power = r * time;
+			newpop = oldpop * Math.exp(power);
+			calculation.add(newpop);
+			time++;
+			System.out.println(calculation);
+		
+		
+//		int something = oldpop;
 		// IMPLEMENT THE CALCULATION
 		
-		return something;
-	}
+//		return something;
+//	}
 	
 	//CACulate for a periode of time
-	public List longcalculation(int time)
-	{
+//	public List longcalculation(int time)
+//	{
 		//RECURSIVE FUNCTION BASED ON TIME
 		
-		List a = new ArrayList(time);
+//		List a = new ArrayList(time);
 		
 		
 		
