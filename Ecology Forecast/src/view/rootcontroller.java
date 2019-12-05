@@ -11,9 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,12 +28,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import model.Animal;
 import model.AnimalFactory;
+import model.SliderCell;
 
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.prefs.Preferences;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -58,7 +63,7 @@ public class rootcontroller {
     private SplitPane rightnavigation;
     
     @FXML
-    private AnchorPane blackboard;
+    private AnchorPane drawingboard;
     
     @FXML
     private AnchorPane functionmenu;
@@ -69,6 +74,8 @@ public class rootcontroller {
     private TableColumn<Animal, String> animalnameColumn;
     @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
+    @FXML
+    private TableColumn sliderColumn;
     
     @FXML
     private Label growthdata;
@@ -86,6 +93,16 @@ public class rootcontroller {
     private ObservableList<Animal> animallist;
     
     public static Boolean addoredit;
+    
+    private FXMLLoader lineloader;
+    private FXMLLoader pieloader;
+    private FXMLLoader barloader;
+    private FXMLLoader statloader;
+    
+    private AnchorPane linepane;
+    private AnchorPane piepane;
+    private AnchorPane barpane;
+    private AnchorPane statpane;
 
     /**
      * The constructor.
@@ -117,32 +134,55 @@ public class rootcontroller {
     	
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
-    	loadblackboard();
+    	loaddrawingboard();
+    	loadview(lineloader, linepane);
+    	
     	
     }
     
     //Populate the blackboard
     @FXML
-    private void loadblackboard() throws IOException
+    private void loaddrawingboard() throws IOException
     {
     	
-    	FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
-        AnchorPane pane = (AnchorPane) loader.load();
-        blackboard.getChildren().setAll(pane);  	
+    	lineloader = new FXMLLoader();
+        lineloader.setLocation(getClass().getResource("/view/lineviewlayout.fxml"));
+        pieloader = new FXMLLoader();
+        pieloader.setLocation(getClass().getResource("/view/pieviewlayout.fxml"));
+        barloader = new FXMLLoader();
+        barloader.setLocation(getClass().getResource("/view/barviewlayout.fxml"));
+              
                 
+        linepane = (AnchorPane) lineloader.load();
+        piepane = (AnchorPane) pieloader.load();
+        barpane = (AnchorPane) barloader.load();
+  	           
     }
+
+    
+    private void loadview(FXMLLoader loader, AnchorPane pane)
+    {
+    	drawingboard.getChildren().setAll(pane); 	
+    }
+    
+    
     
     @FXML
     private void startsimulation()
     {
     	lineviewlayoutcontroller.spawndata();
+    	pieviewlayoutcontroller.spawndata();
+    	barviewlayoutcontroller.spawndata();
+    	
+    	
     }
     
     @FXML
     private void clearsimulation()
     {
     	lineviewlayoutcontroller.cleardata();
+    	pieviewlayoutcontroller.cleardata();
+    	barviewlayoutcontroller.cleardata();
     }
     
 
@@ -163,10 +203,19 @@ public class rootcontroller {
         
         animallist = main.getAnimals();
         animalTable.setItems(animallist);
-
+             
     }
     
+   
+    // NAVIGATION BOARD FUNCTIONS
+    
     @FXML
+    private void handleloadpreset()
+    {
+    	main.loadAnimalPreset("Eco Data\\Ecodata.xlsx");
+    }
+
+	@FXML
     private void handleAddAnimal()
     {
     	Animal tempanimal = new Animal();
@@ -203,9 +252,11 @@ public class rootcontroller {
     private void handleDeleteAnimal()
     {
     	int selectedIndex = animalTable.getSelectionModel().getSelectedIndex();
+    	Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
     	if (selectedIndex >=0)
     	{
-    	animalTable.getItems().remove(selectedIndex);
+    	animalTable.getItems().remove(selectedIndex);	
+    	animallist.remove(selectedAnimal);
     	}
     	else
     	{
@@ -236,7 +287,10 @@ public class rootcontroller {
     	}
     }
       
-            
+         
+    
+    // FILE FUNCTIONS
+    
     @FXML
     private void handleNew()
     {
@@ -257,6 +311,7 @@ public class rootcontroller {
     	{
     		main.loadAnimalDataFromFile(file);
     	}
+    	
     }
     
     @FXML
@@ -277,6 +332,32 @@ public class rootcontroller {
     		main.saveAnimalDataToFile(file);
     	}    	
     }
+    
+    
+    // VIEW FUNCTIONS
+    @FXML
+    private void handlelineView()   
+    {
+    	loadview(lineloader, linepane);
+    }
+    @FXML
+    private void handlepieView()   
+    {
+    	loadview(pieloader, piepane);
+    }
+    @FXML
+    private void handlebarView()   
+    {
+    	loadview(barloader, barpane);
+    }
+    @FXML
+    private void handlestatView()   
+    {
+    	System.out.println("statview");
+    }
+  
+    
+    // HELP FUNCTIONS
     
     @FXML
     private void handleAbout()
