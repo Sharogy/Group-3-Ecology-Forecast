@@ -11,7 +11,7 @@ public class Exmodel {
 	private double death;
 	private int timeperiode;
 	
-	public int calculate(int oldpop, double birth, double death, int timeperiode)
+	public void calculate(int oldpop, double birth, double death, int timeperiode)
 	{
 		
 		double r = birth - death;
@@ -24,3 +24,6 @@ public class Exmodel {
 			time++;
 			System.out.println(calculation);
 		
+		}
+	}
+}
