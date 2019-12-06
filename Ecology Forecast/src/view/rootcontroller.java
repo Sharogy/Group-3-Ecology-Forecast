@@ -135,7 +135,7 @@ public class rootcontroller {
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
     	loaddrawingboard();
-    	loadview(lineloader, linepane);
+    	loadview(statloader, statpane);
     	
     	
     }
@@ -151,11 +151,13 @@ public class rootcontroller {
         pieloader.setLocation(getClass().getResource("/view/pieviewlayout.fxml"));
         barloader = new FXMLLoader();
         barloader.setLocation(getClass().getResource("/view/barviewlayout.fxml"));
-              
+        statloader = new FXMLLoader();
+        statloader.setLocation(getClass().getResource("/view/statviewlayout.fxml"));      
                 
         linepane = (AnchorPane) lineloader.load();
         piepane = (AnchorPane) pieloader.load();
         barpane = (AnchorPane) barloader.load();
+        statpane = (AnchorPane) statloader.load();
   	           
     }
 
@@ -173,8 +175,9 @@ public class rootcontroller {
     	lineviewlayoutcontroller.spawndata();
     	pieviewlayoutcontroller.spawndata();
     	barviewlayoutcontroller.spawndata();
-    	
-    	
+    	//statviewlayoutcontroller.spawndata();  
+    	statviewlayoutcontroller controller = statloader.getController();
+    	controller.spawn();
     }
     
     @FXML
@@ -183,6 +186,9 @@ public class rootcontroller {
     	lineviewlayoutcontroller.cleardata();
     	pieviewlayoutcontroller.cleardata();
     	barviewlayoutcontroller.cleardata();
+    	//statviewlayoutcontroller.cleardata();
+    	statviewlayoutcontroller controller = statloader.getController();
+    	controller.clear();
     }
     
 
@@ -353,7 +359,7 @@ public class rootcontroller {
     @FXML
     private void handlestatView()   
     {
-    	System.out.println("statview");
+    	loadview(statloader, statpane);
     }
   
     
