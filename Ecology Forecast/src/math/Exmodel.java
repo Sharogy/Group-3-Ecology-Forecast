@@ -9,30 +9,29 @@ public class Exmodel {
 	private double oldpop;
 	private double birth;
 	private double death;
-	private int timeperiode;
+	private int timeperiod;
+	private int time = 0;
 	
-	public void calculate(int oldpop, double birth, double death, int timeperiode)
+	public int calculate(int oldpop, double birth, double death, int timeperiod)
 	{
 		
 		double r = birth - death;
-		int time = 1;
-		List calculation = new ArrayList(timeperiode);
-		while (time <= timeperiode) {
-			double power = r * time;
-			newpop = oldpop * Math.exp(power);
-			calculation.add(newpop);
-			time++;
-			System.out.println(calculation);
-
-		return something;
+		double power = r * time;
+		newpop = oldpop * Math.exp(power);
+		return newpop;
 	}
 	
-	//CACulate for a periode of time
-	public List longcalculation(int time)
+	//Calculate for a period of time
+	public List longcalculation(int timeperiod)
 	{
 		//RECURSIVE FUNCTION BASED ON TIME
 		
-		List a = new ArrayList(time);
+		List a = new ArrayList(timeperiod);
+		for (int i=1; i <= timeperiod; i++) {
+			calculate(oldpop, birth, death, timeperiod);
+			a.add(newpop);
+			
+		System.out.println(a);
 		
 		
 		
