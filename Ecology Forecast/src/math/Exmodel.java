@@ -12,11 +12,10 @@ public class Exmodel {
 	private int timeperiod;
 	private int time = 0;
 	
-	public int calculate(int oldpop, double birth, double death, int timeperiod)
+	public int calculate(double oldpop, double birth, double death, int timeperiod)
 	{
-		
-		double r = birth - death;
-		double power = r * time;
+		double increaseRate = birth - death;
+		double power = increaseRate * time;
 		newpop = oldpop * Math.exp(power);
 		return newpop;
 	}
