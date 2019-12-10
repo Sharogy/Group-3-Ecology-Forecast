@@ -2,26 +2,26 @@ package math;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import model.Animal;
 
-public class Exmodel implements imodel {
+public class Stomodel implements imodel{
 	
 	private int oldpop;
 	private double birth;
 	private double death;
 	
-	private int precalc(Animal ani, int timeperiod)
-	{	
+	public int precalc(Animal ani, int timeperiod)
+	{
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
-		double newpop = oldpop * Math.exp(power);
-		return (int) Math.round(newpop);
+		double variancePopSize = (oldpop*(birth+death)*Math.exp(power)*(Math.exp(power)-timeperiod))/increaseRate;
+		return (int) Math.round(variancePopSize);
 	}
 	
-	//Calculate for a period of time
+
 	@Override
-	public List<Integer> calculate(Animal ani, int timeperiod)
-	{		
+	public List<Integer> calculate(Animal ani, int timeperiod) {
 		this.oldpop = ani.getNumber();
 		this.birth = ani.getGrowthrate();
 		this.death = ani.getDeathrate();
@@ -35,3 +35,4 @@ public class Exmodel implements imodel {
 		return a;
 	}
 }
+

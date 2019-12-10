@@ -29,6 +29,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import math.Exmodel;
 import model.Animal;
 import model.AnimalFactory;
 import model.SliderCell;
@@ -37,6 +38,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -135,7 +137,7 @@ public class rootcontroller {
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
     	loaddrawingboard();
-    	loadview(statloader, statpane);
+    	loadview(lineloader, linepane);
     	
     	
     }
@@ -172,18 +174,23 @@ public class rootcontroller {
     @FXML
     private void startsimulation()
     {
-    	lineviewlayoutcontroller.spawndata();
+    	clearsimulation();
+    	
+    	
+    	lineviewlayoutcontroller linecontroller = lineloader.getController();
+    	linecontroller.spawndata(animallist, 5);
     	pieviewlayoutcontroller.spawndata();
     	barviewlayoutcontroller.spawndata();
     	//statviewlayoutcontroller.spawndata();  
-    	statviewlayoutcontroller controller = statloader.getController();
-    	controller.spawn();
+    	statviewlayoutcontroller statcontroller = statloader.getController();
+    	statcontroller.spawn();
     }
     
     @FXML
     private void clearsimulation()
     {
-    	lineviewlayoutcontroller.cleardata();
+    	lineviewlayoutcontroller linecontroller = lineloader.getController();
+    	linecontroller.cleardata();
     	pieviewlayoutcontroller.cleardata();
     	barviewlayoutcontroller.cleardata();
     	//statviewlayoutcontroller.cleardata();
