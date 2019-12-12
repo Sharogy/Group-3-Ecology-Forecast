@@ -30,14 +30,12 @@ public class statviewlayoutcontroller implements icontroller{
 	//parseCSV("C:/list.csv");
 	
 	public statviewlayoutcontroller()
-    {
-    	
+    {    	
     }
 
     @FXML
     private void initialize() 
-    {
-    	
+    {  	
     }
     
     public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im)
@@ -47,9 +45,11 @@ public class statviewlayoutcontroller implements icontroller{
     	columns = new ArrayList<String>();
     	columns.add("Animals");
     	columns.add("Starting Pop");
-    	columns.add("year 1 pop");
-    	columns.add("year 2 pop");
-    	columns.add("year 3 pop");
+    	for (int i = 1; i<timeperiod+1; i++)
+    	{
+    		columns.add("Year " + String.valueOf(i) + " Pop");
+    		
+    	}
     	int columnIndex = 0;
 		tableColumns = new TableColumn[columns.size()];  
 		for(int i = 0; i<columns.size(); i++) 
@@ -67,37 +67,26 @@ public class statviewlayoutcontroller implements icontroller{
     	stattable.getColumns().addAll(tableColumns);
     	
     	//spawn data
-    	
-    	List<String> one = Arrays.asList("cow","500","520","530","550");
-    	List<String> two = Arrays.asList("cattle","1000","800","600","500");
-    	List<String> three = Arrays.asList("horse","600","700","800","900");
-//    	Results r1 = new Results("cow", 490, one);
-//    	Results r2 = new Results("deer", 1500, two);
-//    	Results r3 = new Results("horse", 400, three);
-    	    	    	
-    	ObservableList<ObservableList> popdata = FXCollections.observableArrayList();
-    	
-    
-    	ObservableList<String> row = FXCollections.observableArrayList();
-    	ObservableList<String> row2 = FXCollections.observableArrayList();
-    	ObservableList<String> row3 = FXCollections.observableArrayList();
-    	for(int j = 0; j<5; j++) 
-		{
-			row.add(one.get(j));
-			row2.add(two.get(j));
-			row3.add(three.get(j));
-			
-		}
-	    popdata.add(row); 
-	    popdata.add(row2);
-	    popdata.add(row3);
-	    
-	    stattable.setItems(popdata);
-	    //Item item = new Item("test", 1);
-	    
-	    //stattable.getItems().add(row);
-	    //stattable.getItems().add(row2);
-	   	
+    	ObservableList<ObservableList> anipopdata = FXCollections.observableArrayList();
+    	for (int i = 0; i<animallist.size(); i++)
+    	{
+    		List<String> anidata = new ArrayList();
+    		anidata.add(animallist.get(i).getName());
+    		for (int j = 0; j< timeperiod+1; j++)
+    		{
+    			List<Integer> result = im.calculate(animallist.get(i), timeperiod);
+    			anidata.add(String.valueOf(result.get(j)));
+    		}
+    		
+    		ObservableList<String> row = FXCollections.observableArrayList();
+    		for (int j = 0; j < anidata.size(); j++)
+    		{
+    			row.add(anidata.get(j));
+    		}
+    		anipopdata.add(row);
+    		
+    	}
+    	stattable.setItems(anipopdata);
     }
         
     public void cleardata()

@@ -1,4 +1,8 @@
-Version Update: V2.0a
+Version Update: V2.1
+
+V2.1
+Implemented timeselection modelselection for statchart
+
 V2.0a
 added icontroller interface
 removed all static methodes in controllers.
