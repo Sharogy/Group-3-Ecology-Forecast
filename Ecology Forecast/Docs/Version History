@@ -1,4 +1,9 @@
-Version Update: V2.0
+Version Update: V2.0a
+V2.0a
+added icontroller interface
+removed all static methodes in controllers.
+removed all singleton design in controllers.
+
 V2.0
 Added Modelfactory
 Added Combobox for model selection in GUI

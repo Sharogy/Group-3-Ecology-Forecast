@@ -13,7 +13,7 @@ import javafx.scene.control.ComboBox;
 import math.imodel;
 import model.Animal;
 
-public class pieviewlayoutcontroller {
+public class pieviewlayoutcontroller implements icontroller {
 	
 	@FXML
 	private PieChart piechart1;	

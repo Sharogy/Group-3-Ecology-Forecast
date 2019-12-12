@@ -14,7 +14,7 @@ import javafx.scene.chart.XYChart;
 import math.imodel;
 import model.Animal;
 
-public class barviewlayoutcontroller {
+public class barviewlayoutcontroller implements icontroller {
 	
 	//Defining the x axis               
 	@FXML

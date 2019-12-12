@@ -13,9 +13,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+import math.imodel;
+import model.Animal;
 import model.Results;
 
-public class statviewlayoutcontroller {
+public class statviewlayoutcontroller implements icontroller{
 	
 	List<String> columns;
 	
@@ -38,7 +40,7 @@ public class statviewlayoutcontroller {
     	
     }
     
-    public void spawn()
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im)
     {
     	//spawn columns
     	
@@ -98,7 +100,7 @@ public class statviewlayoutcontroller {
 	   	
     }
         
-    public void clear()
+    public void cleardata()
     {
     	stattable.getColumns().clear();
     }

@@ -83,16 +83,14 @@ public class rootcontroller {
     private TableColumn<Animal, String> animalnameColumn;
     @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
-    @FXML
-    private TableColumn sliderColumn;
     
     private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years");
     private ObservableList<String> modeloptions = FXCollections.observableArrayList("Exponential Model", "Stochastic Model");
     private int timeperiod;
     @FXML
-    private ComboBox timebox = new ComboBox(timeoptions);
+    private ComboBox<String> timebox;
     @FXML
-    private ComboBox modelbox = new ComboBox(modeloptions);
+    private ComboBox<String> modelbox;
   
     @FXML
     private Label growthdata;
@@ -101,12 +99,9 @@ public class rootcontroller {
     @FXML
     private Label consumptiondata;
 
-
-    // Reference to the main application.
+    //Local attributes
     private Main main;
-    
-    private static rootcontroller root = null;
-    
+        
     private ObservableList<Animal> animallist;
     
     public static Boolean addoredit;
@@ -123,8 +118,14 @@ public class rootcontroller {
     private AnchorPane barpane;
     private AnchorPane statpane;
     
+    private lineviewlayoutcontroller linecontroller;
+	private pieviewlayoutcontroller piecontroller;
+	private barviewlayoutcontroller barcontroller;
+	private statviewlayoutcontroller statcontroller;
+    
     private String selectedtime = "3 Years";
     private String selectedmodel = "Exponential Model";
+    
   
     /**
      * The constructor.
@@ -134,14 +135,6 @@ public class rootcontroller {
     public rootcontroller() {
     }
     
-    public static rootcontroller getInstance() {
-    	if (root == null)
-    	{
-    		root = new rootcontroller();   		
-    	}
-    	return root;
-    }
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -200,16 +193,19 @@ public class rootcontroller {
     	String[] split = selectedtime.split("\\s+");
     	timeperiod = Integer.valueOf(split[0]); 	
     	
-    	lineviewlayoutcontroller linecontroller = lineloader.getController();
-    	pieviewlayoutcontroller piecontroller = pieloader.getController();
-    	barviewlayoutcontroller barcontroller = barloader.getController();
-    	statviewlayoutcontroller statcontroller = statloader.getController();
-    	
+    	linecontroller = lineloader.getController();
+    	piecontroller = pieloader.getController();
+    	barcontroller = barloader.getController();
+    	statcontroller = statloader.getController();
+    	    	
     	try {
+    		if (animallist.size() == 0) {
+        		throw new NullPointerException("Animalist is Empty");
+        	}
     	linecontroller.spawndata(animallist, timeperiod, im);
     	piecontroller.spawndata(animallist, timeperiod, im);
-    	barcontroller.spawndata(animallist,  timeperiod,  im);
-    	statcontroller.spawn();
+    	barcontroller.spawndata(animallist, timeperiod, im);
+    	statcontroller.spawndata(animallist, timeperiod, im);
     	}
     	catch (NullPointerException e)
     	{
@@ -226,14 +222,14 @@ public class rootcontroller {
     @FXML
     private void clearsimulation()
     {
-    	lineviewlayoutcontroller linecontroller = lineloader.getController();
-    	pieviewlayoutcontroller piecontroller = pieloader.getController();
-    	barviewlayoutcontroller barcontroller = barloader.getController();
-    	statviewlayoutcontroller statcontroller = statloader.getController();
+    	linecontroller = lineloader.getController();
+    	piecontroller = pieloader.getController();
+    	barcontroller = barloader.getController();
+    	statcontroller = statloader.getController();
     	linecontroller.cleardata();
     	piecontroller.cleardata();
     	barcontroller.cleardata();
-    	statcontroller.clear();
+    	statcontroller.cleardata();
     }
     
 
@@ -458,7 +454,6 @@ public class rootcontroller {
     			{
     				selectedmodel = String.valueOf(modelbox.getValue());
     			}
-    	
     		};
     
     private void spawncombobox() 

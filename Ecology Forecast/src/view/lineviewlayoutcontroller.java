@@ -26,7 +26,7 @@ import model.Animal;
  * 
  * @author Marco Jakob
  */
-public class lineviewlayoutcontroller {
+public class lineviewlayoutcontroller implements icontroller {
 
     @FXML
     public LineChart<String, Integer> linechart;
