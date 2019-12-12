@@ -15,7 +15,7 @@ public class Stomodel implements imodel{
 	{
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
-		double variancePopSize = (oldpop*(birth+death)*Math.exp(power)*(Math.exp(power)-timeperiod))/increaseRate;
+		double variancePopSize = (oldpop*(birth+death)*Math.exp(power)*(Math.exp(power)-1))/increaseRate;
 		return (int) Math.round(variancePopSize);
 	}
 	
