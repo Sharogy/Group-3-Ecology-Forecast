@@ -18,6 +18,7 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import math.Exmodel;
 import math.Stomodel;
+import math.imodel;
 import model.Animal;
 
 /**
@@ -66,14 +67,13 @@ public class lineviewlayoutcontroller {
     }
     
     
-    public void spawndata(List<Animal> animallist, int timeperiod)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im)
     {
   	
-    	Stomodel ex = new Stomodel();
     	for (int j = 0; j < animallist.size(); j++)
     	{
     		Animal ani = animallist.get(j);
-        	List<Integer> anidata = ex.calculate(ani, timeperiod);
+        	List<Integer> anidata = im.calculate(ani, timeperiod);
         	series = new Series<String, Number>();
             series.setName(ani.getName());
          	for (int i = 0; i < anidata.size(); i++)

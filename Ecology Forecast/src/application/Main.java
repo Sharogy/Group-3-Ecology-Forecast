@@ -17,10 +17,6 @@ import math.Exmodel;
 import view.animaleditcontroller;
 import view.deletelayoutcontroller;
 import view.rootcontroller;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-
 import Util.AlertBox;
 import Util.Dataminer;
 import Util.Datawriter;
@@ -28,9 +24,6 @@ import Util.Settings;
 
 import model.Animal;
 import model.AnimalFactory;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -84,8 +77,6 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        File file = getAnimalFilePath();
     }
     
     public void showDeleteAnimals()
@@ -176,88 +167,5 @@ public class Main extends Application {
     public ObservableList<Animal> getAnimals()
     {
     	return animallist;
-    }
-    
-    
-    public void loadAnimalDataFromFile(File file) {
-        try {
-            Dataminer.setpath(file.getAbsolutePath());
-            AnimalFactory af = AnimalFactory.getInstance();
-            animallist.addAll(af.getAnimals());
-            
-            setAnimalFilePath(file);
-            
-        } catch (Exception e) { // catches ANY exception
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not load data");
-            alert.setContentText("Could not load data from file:\n" + file.getPath());
-
-            alert.showAndWait();
-        	e.printStackTrace();
-        }
-    }
-    
-    public void loadAnimalPreset(String path)
-    {
-    	
-    	Dataminer.setpath(path);
-    	AnimalFactory af = AnimalFactory.getInstance();
-    	animallist.clear();
-        animallist.addAll(af.getAnimals());
-    }
-
-    /**
-     * Saves the current person data to the specified file.
-     * 
-     * @param file
-     */
-    public void saveAnimalDataToFile(File file) {
-    	
-    	try {
-    		
-    		Datawriter.setpath(file.getAbsolutePath());
-    	
-    		Datawriter.writeData(animallist);
-        
-    		// Save the file path to the registry.
-    		setAnimalFilePath(file);
-            
-            
-        } catch (Exception e) { // catches ANY exception
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not save data");
-            alert.setContentText("Could not save data to file:\n" + file.getPath());
-
-            alert.showAndWait();
-        }
-    }
-    
-    //returns file preference, aka where the file was last opened
-    public File getAnimalFilePath() {
-        Preferences prefs = Preferences.userNodeForPackage(Main.class);
-        String filePath = prefs.get("filePath", null);
-        if (filePath != null) {
-            return new File(filePath);
-        } else {
-            return null;
-        }
-    }
-    
-    // sets the file path of the current file.
-    public void setAnimalFilePath(File file) {
-        Preferences prefs = Preferences.userNodeForPackage(Main.class);
-        if (file != null) {
-            prefs.put("filePath", file.getPath());
-
-            // Update the stage title.
-            primaryStage.setTitle("Animal Population Forecast - " + file.getName());
-        } else {
-            prefs.remove("filePath");
-
-            // Update the stage title.
-            primaryStage.setTitle("Animal Population Forecast");
-        }
     }
 }

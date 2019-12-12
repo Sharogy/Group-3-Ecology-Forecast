@@ -1,4 +1,12 @@
-Version Update: V1.9
+Version Update: V2.0
+V2.0
+Added Modelfactory
+Added Combobox for model selection in GUI
+Added actionhandler for combobox
+Separated Data access layer from Main to Dataaccess class
+Added Combobox for time selection in GUI
+Added Alert for empty data
+Implemented timeselection modelselection for linechart, piechart and stackedbarchart
 
 V1.9a
 Fixed error in stochastic model

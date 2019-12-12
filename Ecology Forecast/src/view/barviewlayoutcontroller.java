@@ -1,6 +1,8 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +11,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import math.imodel;
+import model.Animal;
 
 public class barviewlayoutcontroller {
 	
@@ -22,11 +26,9 @@ public class barviewlayoutcontroller {
 	@FXML
 	private NumberAxis yAxis;
 	
-	private static XYChart.Series<String, Number> series1;
-	private static XYChart.Series<String, Number> series2;
-	private static XYChart.Series<String, Number> series3;
+	private List<String> categories = new ArrayList<String>();
+	private List<List<Integer>> bardatacollection; 
 
-	
 	public barviewlayoutcontroller()
     {
     	
@@ -35,59 +37,47 @@ public class barviewlayoutcontroller {
 	@FXML
 	public void initialize()
 	{  
-
-		xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList
-		   ("2020", "2021", "2022", "2023", "2024"))); 
+		//Defining the x axis
 		xAxis.setLabel("Time in Years");  
 
 		//Defining the y axis 
 		yAxis.setLabel("Population");
-		
-		//Setting the data to bar chart  
-		
-		series1 = new XYChart.Series<>(); 
-		series1.setName("Heck Cattle"); 
-		
-		series2 = new XYChart.Series<>();  
-		series2.setName("Red Deer"); 
-		
-		series3 = new XYChart.Series<>(); 
-		series3.setName("Konik Horse"); 
-		
-		stackedbarchart.getData().addAll(series1, series2, series3); 
-		
 	}
 	
-	public static void spawndata()
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im )
 	{
-		//Prepare XYChart.Series objects by setting data 
-
-		series1.getData().add(new XYChart.Data<>("2020", 107)); 
-		series1.getData().add(new XYChart.Data<>("2021", 31)); 
-		series1.getData().add(new XYChart.Data<>("2022", 635)); 
-		series1.getData().add(new XYChart.Data<>("2023", 203)); 
-		series1.getData().add(new XYChart.Data<>("2024", 2)); 
+		for (int i = 0; i< timeperiod+1; i++)
+		{
+			categories.add("Year " + String.valueOf(i));
+		}
+		xAxis.setCategories(FXCollections.<String>observableArrayList(categories));
 		
+		bardatacollection = new ArrayList<List<Integer>>();
+		for (int i = 0; i< animallist.size(); i++)
+		{
+			Animal ani = animallist.get(i);
+			List<Integer> anidata = im.calculate(ani, timeperiod);		
+			bardatacollection.add(anidata);
+		}
 		
-		series2.getData().add(new XYChart.Data<>("2020", 133)); 
-		series2.getData().add(new XYChart.Data<>("2021", 156)); 
-		series2.getData().add(new XYChart.Data<>("2022", 947)); 
-		series2.getData().add(new XYChart.Data<>("2023", 408)); 
-		series1.getData().add(new XYChart.Data<>("2024", 6));  
-
-		
-		series3.getData().add(new XYChart.Data<>("2020", 973)); 
-		series3.getData().add(new XYChart.Data<>("2021", 914)); 
-		series3.getData().add(new XYChart.Data<>("2022", 4054)); 
-		series3.getData().add(new XYChart.Data<>("2023", 732)); 
-		series1.getData().add(new XYChart.Data<>("2024", 34));
+		for (int i = 0; i< animallist.size(); i++)
+		{
+			XYChart.Series<String, Number> series = new XYChart.Series<>();
+			series.setName(animallist.get(i).getName());
+			for (int j = 0; j < timeperiod + 1; j++)
+			{
+				series.getData().add(new XYChart.Data<>(categories.get(j),bardatacollection.get(i).get(j)));
+			}
+			stackedbarchart.getData().add(series);			
+		}
 	}
 	
-	public static void cleardata()
+	public void cleardata()
 	{
-		series1.getData().forEach(a -> a.setYValue(0));
-		series2.getData().forEach(a -> a.setYValue(0));
-		series3.getData().forEach(a -> a.setYValue(0));
+		categories.clear();
+		stackedbarchart.getData().forEach(a -> a.getData().forEach(b -> b.setYValue(0)));
+		stackedbarchart.getData().clear();
+		stackedbarchart.layout();
 	}
 
 }
