@@ -31,7 +31,6 @@ public class Competitive_Model implements imodel{
 		double [][] matrixdata2 = {{k1},{k2},{k3}};
 		RealMatrix interactionmatrix = MatrixUtils.createRealMatrix(matrixdata);
 		RealMatrix capacitymatrix = MatrixUtils.createRealMatrix(matrixdata2);
-		
 		int a = 0;
 		return a;		
 	}
