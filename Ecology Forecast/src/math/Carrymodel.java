@@ -12,16 +12,19 @@ import model.Animal;
 		private double AmplitudeCycle;
 		private int timeperiode;
 		private double CycleLength;
+		private int oldpop;
+		private double birth;
+		private double death;
+		
 		
 		public int precalc(Animal ani, int timeperiod)
 		{
 			
 			double Equation = 2*Math.PI * timeperiode/CycleLength;
 			NewCarryingCap = MeanCarryingCap + AmplitudeCycle * Math.cos(Equation);
-			
+			return (int) Math.round(NewCarryingCap);
 			
 		}
-		
 
 		@Override
 		public List<Integer> calculate(Animal ani, int timeperiod) {
@@ -37,5 +40,5 @@ import model.Animal;
 			}
 			return a;
 		}
-	}
+	
 }
