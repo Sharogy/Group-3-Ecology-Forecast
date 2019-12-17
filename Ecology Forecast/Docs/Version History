@@ -1,4 +1,27 @@
-Version Update: V1.8
+Version Update: V2.1
+
+V2.1
+Implemented timeselection modelselection for statchart
+
+V2.0a
+added icontroller interface
+removed all static methodes in controllers.
+removed all singleton design in controllers.
+
+V2.0
+Added Modelfactory
+Added Combobox for model selection in GUI
+Added actionhandler for combobox
+Separated Data access layer from Main to Dataaccess class
+Added Combobox for time selection in GUI
+Added Alert for empty data
+Implemented timeselection modelselection for linechart, piechart and stackedbarchart
+
+V1.9a
+Fixed error in stochastic model
+
+V1.9
+Added Exponential Model and Stochastic Model
 
 V1.8
 Added Statchart

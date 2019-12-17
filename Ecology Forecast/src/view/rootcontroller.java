@@ -3,6 +3,7 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -30,9 +32,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import math.Exmodel;
+import math.imodel;
+import math.modelfactory;
 import model.Animal;
 import model.AnimalFactory;
-import model.SliderCell;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -41,9 +44,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import Util.AlertBox;
+import Util.Dataaccess;
 import Util.Dataminer;
 import Util.Datawriter;
 import application.Main;
@@ -76,9 +83,15 @@ public class rootcontroller {
     private TableColumn<Animal, String> animalnameColumn;
     @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
-    @FXML
-    private TableColumn sliderColumn;
     
+    private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years");
+    private ObservableList<String> modeloptions = FXCollections.observableArrayList("Exponential Model", "Stochastic Model");
+    private int timeperiod;
+    @FXML
+    private ComboBox<String> timebox;
+    @FXML
+    private ComboBox<String> modelbox;
+  
     @FXML
     private Label growthdata;
     @FXML
@@ -86,15 +99,14 @@ public class rootcontroller {
     @FXML
     private Label consumptiondata;
 
-
-    // Reference to the main application.
+    //Local attributes
     private Main main;
-    
-    private static rootcontroller root = null;
-    
+        
     private ObservableList<Animal> animallist;
     
     public static Boolean addoredit;
+    
+    private Dataaccess da = new Dataaccess();
     
     private FXMLLoader lineloader;
     private FXMLLoader pieloader;
@@ -105,7 +117,16 @@ public class rootcontroller {
     private AnchorPane piepane;
     private AnchorPane barpane;
     private AnchorPane statpane;
-
+    
+    private lineviewlayoutcontroller linecontroller;
+	private pieviewlayoutcontroller piecontroller;
+	private barviewlayoutcontroller barcontroller;
+	private statviewlayoutcontroller statcontroller;
+    
+    private String selectedtime = "3 Years";
+    private String selectedmodel = "Exponential Model";
+    
+  
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -114,14 +135,6 @@ public class rootcontroller {
     public rootcontroller() {
     }
     
-    public static rootcontroller getInstance() {
-    	if (root == null)
-    	{
-    		root = new rootcontroller();   		
-    	}
-    	return root;
-    }
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -137,11 +150,11 @@ public class rootcontroller {
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
     	loaddrawingboard();
-    	loadview(lineloader, linepane);
-    	
+    	loadview(lineloader, linepane);  
+    	spawncombobox();   	
     	
     }
-    
+        
     //Populate the blackboard
     @FXML
     private void loaddrawingboard() throws IOException
@@ -170,32 +183,53 @@ public class rootcontroller {
     }
     
     
-    
     @FXML
     private void startsimulation()
     {
     	clearsimulation();
+    	  	
+    	modelfactory mf = new modelfactory();
+    	imodel im = mf.getModel(selectedmodel);
+    	String[] split = selectedtime.split("\\s+");
+    	timeperiod = Integer.valueOf(split[0]); 	
     	
-    	
-    	lineviewlayoutcontroller linecontroller = lineloader.getController();
-    	linecontroller.spawndata(animallist, 5);
-    	pieviewlayoutcontroller.spawndata();
-    	barviewlayoutcontroller.spawndata();
-    	//statviewlayoutcontroller.spawndata();  
-    	statviewlayoutcontroller statcontroller = statloader.getController();
-    	statcontroller.spawn();
+    	linecontroller = lineloader.getController();
+    	piecontroller = pieloader.getController();
+    	barcontroller = barloader.getController();
+    	statcontroller = statloader.getController();
+    	    	
+    	try {
+    		if (animallist.size() == 0) {
+        		throw new NullPointerException("Animalist is Empty");
+        	}
+    	linecontroller.spawndata(animallist, timeperiod, im);
+    	piecontroller.spawndata(animallist, timeperiod, im);
+    	barcontroller.spawndata(animallist, timeperiod, im);
+    	statcontroller.spawndata(animallist, timeperiod, im);
+    	}
+    	catch (NullPointerException e)
+    	{
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Animal Data");
+            alert.setHeaderText("No Animal Data Selected");
+            alert.setContentText("Please load the animal data from an existing file or load the preset data.");
+
+            alert.showAndWait();
+    	}   	
     }
     
     @FXML
     private void clearsimulation()
     {
-    	lineviewlayoutcontroller linecontroller = lineloader.getController();
+    	linecontroller = lineloader.getController();
+    	piecontroller = pieloader.getController();
+    	barcontroller = barloader.getController();
+    	statcontroller = statloader.getController();
     	linecontroller.cleardata();
-    	pieviewlayoutcontroller.cleardata();
-    	barviewlayoutcontroller.cleardata();
-    	//statviewlayoutcontroller.cleardata();
-    	statviewlayoutcontroller controller = statloader.getController();
-    	controller.clear();
+    	piecontroller.cleardata();
+    	barcontroller.cleardata();
+    	statcontroller.cleardata();
     }
     
 
@@ -214,8 +248,9 @@ public class rootcontroller {
         scenenavigation.lookupAll(".split-pane-divider").stream()
         .forEach(div ->  div.setMouseTransparent(true) ); 
         
-        animallist = main.getAnimals();
         animalTable.setItems(animallist);
+        
+        da.setAnimalFilePath(null);
              
     }
     
@@ -225,7 +260,9 @@ public class rootcontroller {
     @FXML
     private void handleloadpreset()
     {
-    	main.loadAnimalPreset("Eco Data\\Ecodata.xlsx");
+    	animallist = da.loadAnimalPreset("Eco Data\\Ecodata.xlsx");
+    	animalTable.setItems(animallist);
+    	main.getPrimaryStage().setTitle("Animal Population Forecast - " + "Preset Data");  	
     }
 
 	@FXML
@@ -235,7 +272,7 @@ public class rootcontroller {
     	addoredit = true;
         boolean okClicked = main.showEditAnimals(tempanimal);
         if (okClicked) {
-            main.getAnimals().add(tempanimal);
+            animallist.add(tempanimal);
         }        
     }
     
@@ -307,30 +344,38 @@ public class rootcontroller {
     @FXML
     private void handleNew()
     {
-    	main.getAnimals().clear();
-    	main.setAnimalFilePath(null);
+    	animallist.clear();
+    	da.setAnimalFilePath(null);
     }
     
     @FXML
     private void handleImport()
     {
-    	FileChooser fileChooser = new FileChooser();
+    	FileChooser fileChooser = new FileChooser(); 	
+    
+    	fileChooser.setInitialDirectory(da.getAnimalFilePath());
     	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx");
     	fileChooser.getExtensionFilters().add(extFilter);
     	
     	File file = fileChooser.showOpenDialog(main.getPrimaryStage());
     	
+    	//da.setAnimalFilePath(null);
+    	
     	if (file != null)
     	{
-    		main.loadAnimalDataFromFile(file);
-    	}
-    	
+    		animallist = da.loadAnimalDataFromFile(file);
+    		animalTable.setItems(animallist);
+    		main.getPrimaryStage().setTitle("Animal Population Forecast - " + file.getName());
+    	}    	
     }
     
     @FXML
     private void handleExport()
     {
     	FileChooser fileChooser = new FileChooser();
+    	
+    	fileChooser.setInitialDirectory(da.getAnimalFilePath());
+
     	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx");
     	fileChooser.getExtensionFilters().add(extFilter);
     	
@@ -342,7 +387,7 @@ public class rootcontroller {
     		{
     			file = new File(file.getPath() + ".xlsx");
     		}
-    		main.saveAnimalDataToFile(file);
+    		da.saveAnimalDataToFile(file, animallist);
     	}    	
     }
     
@@ -393,5 +438,34 @@ public class rootcontroller {
     	        // no application registered for PDFs
     	    }
     	}
+    }
+    
+    // Combobox event and options
+    private EventHandler<ActionEvent> timeevent = new EventHandler<ActionEvent>()
+			{
+				public void handle(ActionEvent e)
+				{
+					selectedtime = String.valueOf(timebox.getValue());
+				}
+			};
+    private EventHandler<ActionEvent> modelevent = new EventHandler<ActionEvent>() 
+    		{
+    			public void handle(ActionEvent e)
+    			{
+    				selectedmodel = String.valueOf(modelbox.getValue());
+    			}
+    		};
+    
+    private void spawncombobox() 
+    {
+    	timebox.setItems(timeoptions);
+    	timebox.setVisibleRowCount(5);
+    	timebox.setValue("3 Years");
+    	timebox.setOnAction(timeevent);
+    	
+    	modelbox.setItems(modeloptions);
+    	modelbox.setVisibleRowCount(5);
+    	modelbox.setValue("Exponential Model");
+    	modelbox.setOnAction(modelevent);	
     }
 }

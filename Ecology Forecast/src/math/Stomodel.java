@@ -21,7 +21,8 @@ public class Stomodel implements imodel{
 	
 
 	@Override
-	public List<Integer> calculate(Animal ani, int timeperiod) {
+	public List<Integer> calculate(Animal ani, int timeperiod) 
+	{
 		this.oldpop = ani.getNumber();
 		this.birth = ani.getGrowthrate();
 		this.death = ani.getDeathrate();
