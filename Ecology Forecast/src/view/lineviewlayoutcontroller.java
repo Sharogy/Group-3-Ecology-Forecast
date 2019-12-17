@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import application.Main;
+import interfaces.icontroller;
 import interfaces.imodel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

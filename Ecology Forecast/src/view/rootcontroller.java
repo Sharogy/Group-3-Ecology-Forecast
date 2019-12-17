@@ -39,6 +39,7 @@ import model.AnimalFactory;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -49,6 +50,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import Util.AlertBox;
+import Util.Classminer;
 import Util.Dataaccess;
 import Util.Dataminer;
 import Util.Datawriter;
@@ -85,7 +87,7 @@ public class rootcontroller {
     private TableColumn<Animal, Number> animaltotalColumn;
     
     private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years");
-    private ObservableList<String> modeloptions = FXCollections.observableArrayList("Exponential Model", "Stochastic Model");
+    private ObservableList<String> modeloptions;
     private int timeperiod;
     @FXML
     private ComboBox<String> timebox;
@@ -151,10 +153,35 @@ public class rootcontroller {
     	
     	loaddrawingboard();
     	loadview(lineloader, linepane);  
-    	spawncombobox();   	
+    	spawncombobox(); 
+    	modelsearch();
     	
     }
         
+    private void modelsearch()
+    {
+    	ArrayList<Class<?>> modellist;
+    	ArrayList<String> models = new ArrayList<String>();
+		try {
+			modellist = Classminer.getClassesForPackage("math");
+	    	for (int i = 0; i < modellist.size(); i++)
+	    	{
+	    		if (imodel.class.isAssignableFrom(modellist.get(i)))
+	    		{
+	    			String model;
+	    			model = modellist.get(i).getSimpleName();
+	    			model = model.replace("_", " ");
+	    			models.add(model);
+	    		}
+	    	}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	modeloptions = FXCollections.observableArrayList(models);	
+    	modelbox.setItems(modeloptions);
+    }
+    
     //Populate the blackboard
     @FXML
     private void loaddrawingboard() throws IOException
@@ -463,7 +490,6 @@ public class rootcontroller {
     	timebox.setValue("3 Years");
     	timebox.setOnAction(timeevent);
     	
-    	modelbox.setItems(modeloptions);
     	modelbox.setVisibleRowCount(5);
     	modelbox.setValue("Exponential Model");
     	modelbox.setOnAction(modelevent);	

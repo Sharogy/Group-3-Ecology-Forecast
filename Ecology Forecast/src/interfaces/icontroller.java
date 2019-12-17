@@ -1,6 +1,5 @@
-package view;
+package interfaces;
 
-import interfaces.imodel;
 import javafx.collections.ObservableList;
 import model.Animal;
 

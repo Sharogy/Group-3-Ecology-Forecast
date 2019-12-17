@@ -1,5 +1,13 @@
 Version Update: V2.1
 
+V2.2
+added carrymodel
+added predator model
+added matrix calculation library
+added classminer to autopopulate models
+fixed some bugs
+
+
 V2.1
 Implemented timeselection modelselection for statchart
 
