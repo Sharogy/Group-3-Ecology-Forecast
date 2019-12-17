@@ -1,7 +1,14 @@
 package application;
 	
+import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
+import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
+
+import Util.AlertBox;
+import Util.Dataminer;
+import Util.Datawriter;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,28 +19,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
-import math.Exmodel;
+import model.Animal;
+import model.AnimalFactory;
 import view.animaleditcontroller;
 import view.deletelayoutcontroller;
 import view.rootcontroller;
-
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-
-import Util.AlertBox;
-import Util.Dataminer;
-import Util.Datawriter;
-import Util.Settings;
-
-import model.Animal;
-import model.AnimalFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.prefs.Preferences;
 
 //Initial Stage setup
 public class Main extends Application {
