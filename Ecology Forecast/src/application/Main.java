@@ -1,14 +1,7 @@
 package application;
 	
-import java.io.File;
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
-import org.graalvm.compiler.phases.common.NodeCounterPhase.Stage;
-
-import Util.AlertBox;
-import Util.Dataminer;
-import Util.Datawriter;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,13 +12,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
-import model.Animal;
-import model.AnimalFactory;
+import javafx.stage.Stage;
 import view.animaleditcontroller;
 import view.deletelayoutcontroller;
 import view.rootcontroller;
-<<<<<<< HEAD
-=======
 import Util.AlertBox;
 import Util.Dataminer;
 import Util.Datawriter;
@@ -36,7 +26,6 @@ import model.AnimalFactory;
 import java.util.Iterator;
 import java.util.List;
 import java.util.prefs.Preferences;
->>>>>>> branch 'master' of https://github.com/Sharogy/Group-3-Ecology-Forecast
 
 //Initial Stage setup
 public class Main extends Application {
@@ -60,11 +49,7 @@ public class Main extends Application {
         this.primaryStage.setOnCloseRequest(e -> {
         	e.consume();
         	safeExit();
-        });
-        
-        
-
-        
+        });       
     }
     
     /**
