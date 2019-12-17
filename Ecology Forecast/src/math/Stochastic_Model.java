@@ -6,7 +6,7 @@ import java.util.List;
 import interfaces.imodel;
 import model.Animal;
 
-public class Stomodel implements imodel{
+public class Stochastic_Model implements imodel{
 	
 	private int oldpop;
 	private double birth;

@@ -17,8 +17,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import math.Exmodel;
-import math.Stomodel;
+import math.Exponential_Model;
+import math.Stochastic_Model;
 import model.Animal;
 
 /**

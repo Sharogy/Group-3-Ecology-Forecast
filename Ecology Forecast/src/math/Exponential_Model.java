@@ -6,7 +6,7 @@ import java.util.List;
 import interfaces.imodel;
 import model.Animal;
 
-public class Exmodel implements imodel {
+public class Exponential_Model implements imodel {
 	
 	private int oldpop;
 	private double birth;

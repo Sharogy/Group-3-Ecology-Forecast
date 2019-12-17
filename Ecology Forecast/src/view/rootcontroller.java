@@ -31,7 +31,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import math.Exmodel;
+import math.Exponential_Model;
 import math.modelfactory;
 import model.Animal;
 import model.AnimalFactory;

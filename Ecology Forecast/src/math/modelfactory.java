@@ -10,13 +10,21 @@ public class modelfactory {
 		{
 			return null;
 		}
-		if (modeltype == "Exponential Model")
+		if (modeltype.equalsIgnoreCase("Exponential Model"))
 		{
-			return new Exmodel();	
+			return new Exponential_Model();	
 		}
-		if (modeltype == "Stochastic Model")
+		if (modeltype.equalsIgnoreCase("Stochastic Model"))
 		{
-			return new Stomodel();
+			return new Stochastic_Model();
+		}
+		if (modeltype.equalsIgnoreCase("Competitive Model"))
+		{
+			return new Competitive_Model();
+		}
+		if (modeltype.equalsIgnoreCase("Predator Model"))
+		{
+			return new Competitive_Model();
 		}
 		return null;
 	}
