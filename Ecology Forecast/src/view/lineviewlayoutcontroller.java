@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import application.Main;
+import interfaces.imodel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import math.Exmodel;
 import math.Stomodel;
-import math.imodel;
 import model.Animal;
 
 /**

@@ -1,4 +1,4 @@
-package math;
+package interfaces;
 
 import java.util.List;
 

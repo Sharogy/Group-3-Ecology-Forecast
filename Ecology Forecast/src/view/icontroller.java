@@ -1,7 +1,7 @@
 package view;
 
+import interfaces.imodel;
 import javafx.collections.ObservableList;
-import math.imodel;
 import model.Animal;
 
 public interface icontroller

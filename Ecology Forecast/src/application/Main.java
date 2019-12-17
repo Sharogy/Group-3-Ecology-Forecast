@@ -17,10 +17,6 @@ import view.animaleditcontroller;
 import view.deletelayoutcontroller;
 import view.rootcontroller;
 import Util.AlertBox;
-import Util.Dataminer;
-import Util.Datawriter;
-import Util.Settings;
-
 import model.Animal;
 import model.AnimalFactory;
 import java.util.Iterator;

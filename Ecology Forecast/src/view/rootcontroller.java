@@ -32,7 +32,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import math.Exmodel;
-import math.imodel;
 import math.modelfactory;
 import model.Animal;
 import model.AnimalFactory;
@@ -54,6 +53,7 @@ import Util.Dataaccess;
 import Util.Dataminer;
 import Util.Datawriter;
 import application.Main;
+import interfaces.imodel;
 import Util.AlertBox;
 
 

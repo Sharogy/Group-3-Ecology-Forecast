@@ -1,5 +1,7 @@
 package math;
 
+import interfaces.imodel;
+
 public class modelfactory {
 	
 	public imodel getModel(String modeltype)
