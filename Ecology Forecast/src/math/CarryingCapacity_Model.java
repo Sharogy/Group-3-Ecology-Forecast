@@ -20,8 +20,16 @@ import Util.Settings;
 				for (Animal ani: animallist)
 				{
 					String name = ani.getName();
-					double foodcapacityperanimal = grasscapacity()/animallist.size();
-					double carryingcapacityperanimal = foodcapacityperanimal / ani.getAvgweight() / ani.getConsumptionrate() / 0.015 / 365;	
+					double foodcapacityperanimal;
+					if (ani.getName().equalsIgnoreCase("Konik Horse"))
+					{
+						foodcapacityperanimal = 2*grasscapacity()/(animallist.size()+1);
+					}
+					else
+					{
+						foodcapacityperanimal = grasscapacity()/(animallist.size()+1);
+					}
+					double carryingcapacityperanimal = foodcapacityperanimal / ani.getAvgweight() / ani.getConsumptionrate() / 0.015 / 300;	
 					carryingcapacity.put(name, carryingcapacityperanimal);
 				}
 			}			
