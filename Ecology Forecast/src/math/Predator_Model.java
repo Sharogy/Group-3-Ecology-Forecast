@@ -36,10 +36,10 @@ public class Predator_Model {
 		return null;
 	}
 	
-	public int getPredPop(int pop)
+	public int getPredPop(int oldpop)
 	//calculates the population change for predators, assume growth/death rate of predator is known.
 	{
-		this.oldpredpop = pop;
+		this.oldpredpop = oldpop;
 		//formula here
 		newpredpop = 0;
 		
