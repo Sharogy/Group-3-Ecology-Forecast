@@ -70,6 +70,10 @@ public class Datawriter {
         	row.createCell(4).setCellValue(animal.getConsumptionrate());
         	
         	row.createCell(5).setCellValue(animal.getAvgweight());
+        	
+        	row.createCell(6).setCellValue(animal.getNotes());
+        	
+        	row.createCell(7).setCellValue(animal.getCarrying());
         }
 
 		// Resize all columns to fit the content size

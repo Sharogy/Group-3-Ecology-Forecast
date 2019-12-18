@@ -16,7 +16,8 @@ public class Logistic_Model implements imodel{
 	private double Death;
 	private double oldpop;
 	List<Animal> animallist;
-
+	private boolean grassmode;
+	private boolean predatormode;
 	
 	public int precalc(Animal ani)
 	{
@@ -24,18 +25,21 @@ public class Logistic_Model implements imodel{
 		//BirthDensity = Birth/oldpop;
 		DiscreteGrowthFactor = Birth-Death;
 		
-		double CarryingCap = CarryingCapacity_Model.getCarrycapacity(ani, animallist);
+		double CarryingCap = CarryingCapacity_Model.getCarrycapacity(ani, animallist, grassmode);
 		FuturePopSize = oldpop + DiscreteGrowthFactor * oldpop*((CarryingCap - oldpop) / CarryingCap);
 		return (int) Math.round(FuturePopSize);
 	}
 	
 
-	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod) 
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod, boolean grassmode, boolean predatormode) 
 	{
 		this.oldpop = ani.getNumber();
 		this.Birth = ani.getGrowthrate();
 		this.Death = ani.getDeathrate();	
 		this.animallist = animallist;
+		this.grassmode = grassmode;
+		this.predatormode = predatormode;
+		
 		List<Integer> a = new ArrayList<Integer>(timeperiod);
 		a.add((int)Math.round(this.oldpop));
 		for (int i=1; i <= timeperiod; i++) 
@@ -52,7 +56,7 @@ public class Logistic_Model implements imodel{
 		AnimalFactory af = AnimalFactory.getInstance();
 		Animal ani = af.getAnimals().get(0);
 		Logistic_Model lm = new Logistic_Model();
-		popoutcome = lm.calculate(af.getAnimals(), ani, 10);
+		popoutcome = lm.calculate(af.getAnimals(), ani, 10, lm.grassmode, lm.predatormode);
 		for (int i = 0; i< popoutcome.size(); i++)
 		{
 			System.out.println(i);

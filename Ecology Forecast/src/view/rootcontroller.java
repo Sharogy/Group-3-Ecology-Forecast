@@ -1,5 +1,7 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Label;
@@ -95,11 +98,17 @@ public class rootcontroller {
     private ComboBox<String> timebox;
     @FXML
     private ComboBox<String> modelbox;
+    @FXML
+    private CheckBox grassbox;
+    @FXML
+    private CheckBox predatorbox;
   
     @FXML
     private Label growthdata;
     @FXML
     private Label deathdata;
+    @FXML
+    private Label avgweightdata;
     @FXML
     private Label consumptiondata;
 
@@ -129,7 +138,8 @@ public class rootcontroller {
     
     private String selectedtime = "3 Years";
     private String selectedmodel = "Exponential Model";
-    
+    private boolean selectedgrass = true;
+    private boolean selectedpredator = false;
   
     /**
      * The constructor.
@@ -156,6 +166,7 @@ public class rootcontroller {
     	
     	loaddrawingboard();
     	loadview(lineloader, linepane);  
+    	checkboxconfig();
     	spawncombobox(); 
     	modelsearch();
     	
@@ -232,10 +243,10 @@ public class rootcontroller {
     		if (animallist.size() == 0) {
         		throw new NullPointerException("Animalist is Empty");
         	}
-    	linecontroller.spawndata(animallist, timeperiod, im);
-    	piecontroller.spawndata(animallist, timeperiod, im);
-    	barcontroller.spawndata(animallist, timeperiod, im);
-    	statcontroller.spawndata(animallist, timeperiod, im);
+    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
+    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
+    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
+    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
     	}
     	catch (NullPointerException e)
     	{
@@ -356,6 +367,7 @@ public class rootcontroller {
     	{
     		growthdata.setText(String.valueOf(animal.getGrowthrate()));
     		deathdata.setText(String.valueOf(animal.getDeathrate()));
+    		avgweightdata.setText(String.valueOf(animal.getAvgweight()));
     		consumptiondata.setText(String.valueOf(animal.getConsumptionrate()));
     		
     	}
@@ -367,6 +379,24 @@ public class rootcontroller {
     	}
     }
       
+    private void checkboxconfig()
+    {
+    	grassbox.setSelected(true);
+    	grassbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                    Boolean old_val, Boolean new_val) {
+                    System.out.println(grassbox.isSelected());
+                    selectedgrass = grassbox.isSelected();
+                 }
+               });
+    	predatorbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+            		Boolean old_val, Boolean new_val) {
+            		System.out.println(predatorbox.isSelected());
+            		selectedpredator = predatorbox.isSelected();
+            }
+        });
+    }
          
     
     // FILE FUNCTIONS
@@ -497,4 +527,5 @@ public class rootcontroller {
     	modelbox.setValue("Exponential Model");
     	modelbox.setOnAction(modelevent);	
     }
+    
 }

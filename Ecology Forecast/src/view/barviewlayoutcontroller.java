@@ -45,7 +45,7 @@ public class barviewlayoutcontroller implements icontroller {
 		yAxis.setLabel("Population");
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im )
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode )
 	{
 		for (int i = 0; i< timeperiod+1; i++)
 		{
@@ -57,7 +57,7 @@ public class barviewlayoutcontroller implements icontroller {
 		for (int i = 0; i< animallist.size(); i++)
 		{
 			Animal ani = animallist.get(i);
-			List<Integer> anidata = im.calculate(animallist, ani, timeperiod);		
+			List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
 			bardatacollection.add(anidata);
 		}
 		

@@ -36,9 +36,16 @@ import Util.Settings;
 			return carryingcapacity;
 		}
 		
-		public static double getCarrycapacity(Animal ani, List<Animal> animallist) {
-			calculate(animallist);
-			return carryingcapacity.get(ani.getName());			
+		public static double getCarrycapacity(Animal ani, List<Animal> animallist, boolean grassmode) {
+			if (grassmode)
+			{
+				calculate(animallist);
+				return carryingcapacity.get(ani.getName());	
+			}
+			else
+			{
+				return ani.getCarrying();
+			}
 		}
 		
 		public static double grasscapacity() {

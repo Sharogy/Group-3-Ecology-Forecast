@@ -35,7 +35,8 @@ public class AnimalFactory {
 			String[][] data = Dataminer.getData();
 			for (int i = 1; i<data.length; i++)
 			{	
-				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), data[i][6]);
+				//System.out.println(data[i][7]);
+				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7]);
 				animallist.add(ani);			
 			}
 		} catch (InvalidFormatException e) {

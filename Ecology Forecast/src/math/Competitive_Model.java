@@ -37,7 +37,7 @@ public class Competitive_Model implements imodel{
 	
 	
 	@Override
-	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod) {
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod , boolean grassmode, boolean predatormode) {
 		// TODO Auto-generated method stub
 		List<List<?>> a = new ArrayList();	
 		return null;

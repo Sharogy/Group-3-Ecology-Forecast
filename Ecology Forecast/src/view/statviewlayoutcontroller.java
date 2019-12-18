@@ -39,7 +39,7 @@ public class statviewlayoutcontroller implements icontroller{
     {  	
     }
     
-    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode)
     {
     	//spawn columns
     	
@@ -75,7 +75,7 @@ public class statviewlayoutcontroller implements icontroller{
     		anidata.add(animallist.get(i).getName());
     		for (int j = 0; j< timeperiod+1; j++)
     		{
-    			List<Integer> result = im.calculate(animallist, animallist.get(i), timeperiod);
+    			List<Integer> result = im.calculate(animallist, animallist.get(i), timeperiod, grassmode, predatormode);
     			anidata.add(String.valueOf(result.get(j)));
     		}
     		

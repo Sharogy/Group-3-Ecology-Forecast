@@ -16,14 +16,15 @@ public class Animal {
 	private DoubleProperty consumptionrate;
 	private DoubleProperty avgweight;
 	private StringProperty notes;
+	private IntegerProperty carrying;
 	
 	
 	public Animal()
 	{
-		this(null,0,0,0,0,0,null);
+		this(null,0,0,0,0,0,0,null);
 	}
 	
-	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, String notes)
+	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, int carrying, String notes)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.total = new SimpleIntegerProperty(total);
@@ -32,6 +33,7 @@ public class Animal {
 		this.consumptionrate = new SimpleDoubleProperty(consumption);
 		this.avgweight = new SimpleDoubleProperty(avgweight);
 		this.notes = new SimpleStringProperty(notes);		
+		this.carrying = new SimpleIntegerProperty(carrying);
 	}
 
 	public String getName() {
@@ -121,6 +123,16 @@ public class Animal {
 	public StringProperty notesProperty()
 	{
 		return notes;
+	}
+	public int getCarrying() {
+		return carrying.get();
+	}
+	public void setCarrying (int carrying) {
+		this.carrying.set(carrying);
+	}
+	public IntegerProperty carryingProperty()
+	{
+		return carrying;
 	}
 
 }

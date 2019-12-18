@@ -22,7 +22,7 @@ public class Stochastic_Model implements imodel{
 	
 
 	@Override
-	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod) 
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod, boolean grassmode, boolean predatormode) 
 	{
 		this.oldpop = ani.getNumber();
 		this.birth = ani.getGrowthrate();

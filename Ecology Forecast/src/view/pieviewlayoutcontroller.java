@@ -52,7 +52,7 @@ public class pieviewlayoutcontroller implements icontroller {
 		piechart2.setData(pieChartData2);	
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im) 
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode) 
 	{
 		this.animallist = animallist;
 		this.timeperiod = timeperiod;
@@ -60,7 +60,7 @@ public class pieviewlayoutcontroller implements icontroller {
 		for (int i = 0; i< animallist.size(); i++)
 		{
 			Animal ani = animallist.get(i);
-			List<Integer> anidata = im.calculate(animallist, ani, timeperiod);		
+			List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
 			piedatacollection.add(anidata);
 		}
 		spawncombobox();
