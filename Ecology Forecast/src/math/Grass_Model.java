@@ -13,7 +13,7 @@ public class Grass_Model {
 		{
 			sum = Math.pow((Settings.tempdata[i] - Settings.avgtemp),2)+ sum;
 		}
-		tempvar = Math.pow(sum/Settings.tempdata.length,0.5);
+		tempvar = Math.pow(sum/Settings.tempdata.length,1);
 		return tempvar;	
 	}
 	

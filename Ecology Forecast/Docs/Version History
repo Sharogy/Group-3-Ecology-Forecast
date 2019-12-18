@@ -1,4 +1,7 @@
-Version Update: V2.4
+Version Update: V2.5
+v2.5
+added grass and predator checkbox
+implemented grass based carryingcapacity calculation for all models
 
 v2.4 
 added grass and carry capacity model
