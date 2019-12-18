@@ -57,7 +57,7 @@ public class barviewlayoutcontroller implements icontroller {
 		for (int i = 0; i< animallist.size(); i++)
 		{
 			Animal ani = animallist.get(i);
-			List<Integer> anidata = im.calculate(ani, timeperiod);		
+			List<Integer> anidata = im.calculate(animallist, ani, timeperiod);		
 			bardatacollection.add(anidata);
 		}
 		

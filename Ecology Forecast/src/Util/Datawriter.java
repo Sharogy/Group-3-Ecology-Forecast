@@ -68,6 +68,8 @@ public class Datawriter {
         	row.createCell(3).setCellValue(animal.getDeathrate());
         	
         	row.createCell(4).setCellValue(animal.getConsumptionrate());
+        	
+        	row.createCell(5).setCellValue(animal.getAvgweight());
         }
 
 		// Resize all columns to fit the content size

@@ -1,10 +1,12 @@
-Version Update: V2.3
+Version Update: V2.4
+
+v2.4 
+added grass and carry capacity model
 
 V2.3
 added logistic_model
 
 V2.2
-added carrymodel
 added predator model
 added matrix calculation library
 added classminer to autopopulate models

@@ -8,7 +8,7 @@ import interfaces.imodel;
 public class Predator_Model implements imodel {
 	
 	@Override
-	public List<Integer> calculate(Animal ani, int timeperiod) {
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod) {
 		// TODO Auto-generated method stub
 		return null;
 	}

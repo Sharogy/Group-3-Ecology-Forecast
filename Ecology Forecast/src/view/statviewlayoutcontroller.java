@@ -75,7 +75,7 @@ public class statviewlayoutcontroller implements icontroller{
     		anidata.add(animallist.get(i).getName());
     		for (int j = 0; j< timeperiod+1; j++)
     		{
-    			List<Integer> result = im.calculate(animallist.get(i), timeperiod);
+    			List<Integer> result = im.calculate(animallist, animallist.get(i), timeperiod);
     			anidata.add(String.valueOf(result.get(j)));
     		}
     		

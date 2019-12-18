@@ -74,7 +74,7 @@ public class lineviewlayoutcontroller implements icontroller {
     	for (int j = 0; j < animallist.size(); j++)
     	{
     		Animal ani = animallist.get(j);
-        	List<Integer> anidata = im.calculate(ani, timeperiod);
+        	List<Integer> anidata = im.calculate(animallist, ani, timeperiod);
         	series = new Series<String, Number>();
             series.setName(ani.getName());
          	for (int i = 0; i < anidata.size(); i++)

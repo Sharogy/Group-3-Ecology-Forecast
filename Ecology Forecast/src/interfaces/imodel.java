@@ -6,6 +6,6 @@ import model.Animal;
 
 public interface imodel
 {
-	public List<Integer> calculate(Animal ani, int timeperiod);
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod);
 
 }

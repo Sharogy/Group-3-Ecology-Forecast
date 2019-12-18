@@ -84,6 +84,8 @@ public class rootcontroller {
     @FXML 
     private TableColumn<Animal, String> animalnameColumn;
     @FXML
+    private TableColumn<Animal, String> animalnotesColumn;
+    @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
     
     private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years");
@@ -145,6 +147,7 @@ public class rootcontroller {
     @FXML
     private void initialize() throws IOException {
     	animalnameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+    	animalnotesColumn.setCellValueFactory(cellData -> cellData.getValue().notesProperty());
     	animaltotalColumn.setCellValueFactory(cellData -> cellData.getValue().totalProperty());
     	
     	showAnimalDetails(null);

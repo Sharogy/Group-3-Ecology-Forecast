@@ -14,21 +14,24 @@ public class Animal {
 	private DoubleProperty growthrate;
 	private DoubleProperty deathrate;
 	private DoubleProperty consumptionrate;
+	private DoubleProperty avgweight;
+	private StringProperty notes;
 	
 	
 	public Animal()
 	{
-		this(null,0,0,0,0);
+		this(null,0,0,0,0,0,null);
 	}
 	
-	public Animal(String name, int total, double growth, double death, double consumption)
+	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, String notes)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.total = new SimpleIntegerProperty(total);
 		this.growthrate = new SimpleDoubleProperty(growth);
 		this.deathrate = new SimpleDoubleProperty(death);
 		this.consumptionrate = new SimpleDoubleProperty(consumption);
-		
+		this.avgweight = new SimpleDoubleProperty(avgweight);
+		this.notes = new SimpleStringProperty(notes);		
 	}
 
 	public String getName() {
@@ -96,5 +99,28 @@ public class Animal {
 		return consumptionrate;
 	}
 	
+	public double getAvgweight() {
+		return avgweight.get();
+	}
+	
+	public void setAvgweight (int avgweight) {
+		this.avgweight.set(avgweight);
+	}
+	
+	public DoubleProperty avgweightProperty()
+	{
+		return avgweight;
+	}
+	
+	public String getNotes() {
+		return notes.get();
+	}
+	public void setNotes (String notes) {
+		this.notes.set(notes);
+	}
+	public StringProperty notesProperty()
+	{
+		return notes;
+	}
 
 }

@@ -32,7 +32,7 @@ public class Dataminer {
         // 1. You can obtain a rowIterator and columnIterator and iterate over them
         Iterator<Row> rowIterator = sheet.rowIterator();
         
-        String[][] dataarray = new String[sheet.getPhysicalNumberOfRows()][5];       
+        String[][] dataarray = new String[sheet.getPhysicalNumberOfRows()][7];       
         int rownum = 0;
         int colnum = 0;
         while (rowIterator.hasNext()) {
@@ -54,5 +54,16 @@ public class Dataminer {
         workbook.close();
         return dataarray;  	
     }
+	
+	public static void main(String[] argz)
+	{
+		try {
+			String[][] data = Dataminer.getData();
+			System.out.println(data[1].length);
+		} catch (InvalidFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

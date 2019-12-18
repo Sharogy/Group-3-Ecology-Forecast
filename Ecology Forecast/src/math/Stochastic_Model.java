@@ -16,13 +16,13 @@ public class Stochastic_Model implements imodel{
 	{
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
-		double variancePopSize = (oldpop*(birth+death)*Math.exp(power)*(Math.exp(power)-1))/increaseRate;
-		return (int) Math.round(variancePopSize);
+		double variancePopSize = (oldpop*oldpop*Math.exp(power*2)*(Math.exp(power*2)-1));
+		return (int) Math.round(Math.pow(variancePopSize, 0.5));
 	}
 	
 
 	@Override
-	public List<Integer> calculate(Animal ani, int timeperiod) 
+	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod) 
 	{
 		this.oldpop = ani.getNumber();
 		this.birth = ani.getGrowthrate();

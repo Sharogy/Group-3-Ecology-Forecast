@@ -67,7 +67,7 @@
                               <TableView fx:id="animalTable" layoutX="19.0" layoutY="97.0" prefHeight="200.0" prefWidth="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
                                 <columns>
                                   <TableColumn fx:id="animalnameColumn" text="Animals" />
-                                  <TableColumn minWidth="2.0" prefWidth="120.0" />
+                                  <TableColumn fx:id="animalnotesColumn" minWidth="2.0" prefWidth="120.0" text="Extra Notes" />
                                     <TableColumn fx:id="animaltotalColumn" minWidth="0.0" prefWidth="50.0" text="Total" />
                                 </columns>
                               </TableView>
