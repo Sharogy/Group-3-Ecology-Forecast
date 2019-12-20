@@ -2216,7 +2216,7 @@
     -fx-padding: 0.166667em; /* 2px, plus border adds 1px */
 
     -fx-background-color: transparent;
-    -fx-border-color: transparent -fx-table-cell-border-color transparent transparent;
+    -fx-border-color: transparent transparent transparent transparent;
     -fx-border-width: 0.083333em; /* 1 */
     -fx-cell-size: 2.0em; /* 24 */
     -fx-text-fill: -fx-text-inner-color;
@@ -4268,7 +4268,7 @@ to the top and bottom -fx-padding values of the parent toolbar. */
     -fx-graphic: url("dialog-warning.png");
 }
 .label-header {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: black;
     -fx-opacity: 1;

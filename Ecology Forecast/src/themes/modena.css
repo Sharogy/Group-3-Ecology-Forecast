@@ -3436,7 +3436,7 @@ is being used to size a border should also be in pixels.
     -fx-graphic: url("dialog-warning.png");
 }
 .label-header {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: black;
     -fx-opacity: 1;
