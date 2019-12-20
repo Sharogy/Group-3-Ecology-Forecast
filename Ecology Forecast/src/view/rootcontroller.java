@@ -32,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import math.Exponential_Model;
@@ -68,7 +69,12 @@ public class rootcontroller {
     private GridPane population;
     
     @FXML
-    private Label testlabel;
+    private Label header;
+    @FXML
+    private Label header2;
+    
+    @FXML
+    private BorderPane borderpane;
     
     @FXML 
     private SplitPane scenenavigation;
@@ -140,6 +146,10 @@ public class rootcontroller {
     private String selectedmodel = "Exponential Model";
     private boolean selectedgrass = true;
     private boolean selectedpredator = false;
+    
+    private String theme = getClass().getResource("/themes/modena.css").toExternalForm();
+    private String theme1 = getClass().getResource("/themes/caspian.css").toExternalForm();
+    private String theme2 = getClass().getResource("/themes/Darktheme.css").toExternalForm();
   
     /**
      * The constructor.
@@ -169,6 +179,8 @@ public class rootcontroller {
     	checkboxconfig();
     	spawncombobox(); 
     	modelsearch();
+    	header.setTextAlignment(TextAlignment.CENTER);
+    	header2.setTextAlignment(TextAlignment.CENTER);
     	
     }
         
@@ -213,8 +225,7 @@ public class rootcontroller {
         linepane = (AnchorPane) lineloader.load();
         piepane = (AnchorPane) pieloader.load();
         barpane = (AnchorPane) barloader.load();
-        statpane = (AnchorPane) statloader.load();
-  	           
+        statpane = (AnchorPane) statloader.load(); 	 
     }
 
     
@@ -483,7 +494,7 @@ public class rootcontroller {
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setTitle("Animal Population Forecast");
     	alert.setHeaderText("This program is developed for the nature reserve Oostvaardersplassen.");
-    	alert.setContentText("Author: Ke Zhang\nStudentID: 607759\nFaculty: Inholland Diemen");
+    	alert.setContentText("Author: Ke Zhang\nContributor: Liam Wynne, Jinnous Fahimi, Judita Martinkutë\nStudentID: 607759\nFaculty: Inholland Diemen");
     	alert.showAndWait();
     }
     
@@ -498,6 +509,33 @@ public class rootcontroller {
     	        // no application registered for PDFs
     	    }
     	}
+    }
+    
+//Layouts
+    @FXML
+    private void handleLayoutdefault()
+    {
+    	borderpane.getStylesheets().remove(theme2);
+    	borderpane.getStylesheets().remove(theme1);
+    	borderpane.getStylesheets().add(theme);
+    }
+    
+    @FXML
+    private void handleLayoutlight()
+    {
+//Remove from scene the theme1(asumming you added to your scene when your app starts)
+    	borderpane.getStylesheets().remove(theme2);
+    	borderpane.getStylesheets().remove(theme);
+    	borderpane.getStylesheets().add(theme1);
+    }
+    
+    @FXML
+    private void handleLayoutDark()
+    {
+    	borderpane.getStylesheets().remove(theme1);
+    	borderpane.getStylesheets().remove(theme);
+    	borderpane.getStylesheets().add(theme2);
+//Remove from scene the theme1(asumming you added to your scene when your app starts)
     }
     
     // Combobox event and options
@@ -527,5 +565,6 @@ public class rootcontroller {
     	modelbox.setValue("Exponential Model");
     	modelbox.setOnAction(modelevent);	
     }
+    
     
 }

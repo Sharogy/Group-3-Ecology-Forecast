@@ -46,10 +46,6 @@ public class Competitive_Model implements imodel{
 	public double getinteraction (int row, int column)
 	{
 		double alphavalue = 0;
-		
-		
-		return alphavalue;
-		
+		return alphavalue;	
 	}
-
 }

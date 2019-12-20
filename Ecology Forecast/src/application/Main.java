@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -31,6 +32,9 @@ public class Main extends Application {
     //private boolean running;
     private rootcontroller controller;
     private ObservableList<Animal> animallist = FXCollections.observableArrayList();
+    
+    private Scene scene;
+    
 
     public Main()
     {   	
@@ -45,7 +49,9 @@ public class Main extends Application {
         this.primaryStage.setOnCloseRequest(e -> {
         	e.consume();
         	safeExit();
-        });       
+        });    
+        
+        this.primaryStage.getIcons().add(new Image("themes/icon.png"));
     }
     
     /**
@@ -59,12 +65,13 @@ public class Main extends Application {
             rootLayout = (BorderPane) loader.load();
             
             // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
+            scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
             
             controller = loader.getController();
             controller.setMainApp(this);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

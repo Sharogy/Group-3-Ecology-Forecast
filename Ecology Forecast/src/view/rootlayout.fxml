@@ -15,9 +15,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.rootcontroller">
+<BorderPane fx:id="borderpane" maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../themes/caspian.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.rootcontroller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -37,6 +36,13 @@
               <MenuItem mnemonicParsing="false" onAction="#handlestatView" text="Stat Chart" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Layout">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleLayoutdefault" text="Default Theme" />
+                <MenuItem mnemonicParsing="false" onAction="#handleLayoutlight" text="Light Theme" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLayoutDark" text="Dark Theme" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
@@ -56,14 +62,18 @@
                     <items>
                       <AnchorPane fx:id="animalmenu" minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="298.0">
                            <children>
-                              <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Natural Reserve Population" AnchorPane.topAnchor="14.0" />
-                              <Text layoutX="35.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Animal Control" />
-                              <ButtonBar layoutX="15.0" layoutY="305.0" prefHeight="40.0" prefWidth="253.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="320.0">
+                              <ButtonBar buttonMinWidth="85.0" layoutX="25.0" layoutY="322.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="322.0">
                                 <buttons>
-                                  <Button mnemonicParsing="false" onAction="#handleAddAnimal" text="Add" />
-                                    <Button mnemonicParsing="false" onAction="#handleEditAnimal" text="Edit" />
-                                    <Button mnemonicParsing="false" onAction="#handleDeleteAnimal" text="Delete" />
+                                  <Button mnemonicParsing="false" onAction="#handleAddAnimal" prefHeight="32.0" prefWidth="120.0" text="Add" />
+                                    <Button mnemonicParsing="false" onAction="#handleEditAnimal" prefHeight="32.0" prefWidth="120.0" text="Edit" />
+                                    <Button minWidth="65.0" mnemonicParsing="false" onAction="#handleDeleteAnimal" prefHeight="32.0" prefWidth="120.0" text="Delete" />
                                 </buttons>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets right="25.0" />
+                                 </padding>
                               </ButtonBar>
                               <TableView fx:id="animalTable" layoutX="19.0" layoutY="97.0" prefHeight="200.0" prefWidth="250.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
                                 <columns>
@@ -72,7 +82,9 @@
                                     <TableColumn fx:id="animaltotalColumn" minWidth="0.0" prefWidth="50.0" text="Total" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="175.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleloadpreset" prefHeight="25.0" prefWidth="89.0" text="Load Preset" />
+                              <Button layoutX="161.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleloadpreset" prefHeight="32.0" prefWidth="120.0" text="Load Preset" AnchorPane.leftAnchor="161.0" AnchorPane.rightAnchor="22.0" />
+                              <Label fx:id="header2" layoutX="16.0" layoutY="289.0" prefHeight="20.0" prefWidth="120.0" styleClass="label-header" text="Animal Control" AnchorPane.leftAnchor="16.0" />
+                              <Label fx:id="header" layoutX="16.0" layoutY="18.0" minHeight="25.0" minWidth="300.0" styleClass="label-header" text="Nature Reserve Population" AnchorPane.leftAnchor="0.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="298.0">
@@ -81,23 +93,23 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="108.0" prefWidth="296.0">
                                        <children>
-                                          <Label layoutX="15.0" layoutY="45.0" text="Growthrate" AnchorPane.bottomAnchor="66.0" />
-                                          <Label layoutX="15.0" layoutY="75.0" text="Deathrate" AnchorPane.bottomAnchor="30.0" />
-                                          <Label layoutX="155.0" layoutY="45.0" text="Avg Weight" AnchorPane.bottomAnchor="66.0" />
-                                          <Label fx:id="growthdata" layoutX="100.0" layoutY="45.0" prefHeight="17.0" prefWidth="25.0" AnchorPane.bottomAnchor="66.0" />
-                                          <Label fx:id="deathdata" layoutX="100.0" layoutY="75.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="100.0" />
-                                          <Label fx:id="avgweightdata" layoutX="250.0" layoutY="75.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="250.0" />
-                                          <Label layoutX="102.0" layoutY="17.0" prefHeight="17.0" prefWidth="93.0" text="Animal Attributes" AnchorPane.topAnchor="15.0" />
-                                          <Label layoutX="155.0" layoutY="75.0" text="Consumption" AnchorPane.bottomAnchor="30.0" />
-                                          <Label fx:id="consumptiondata" layoutX="255.0" layoutY="45.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="250.0" />
+                                          <Label layoutX="16.0" layoutY="50.0" text="Growthrate" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="50.0" />
+                                          <Label layoutX="20.0" layoutY="86.0" text="Deathrate" AnchorPane.bottomAnchor="20.0" />
+                                          <Label layoutX="155.0" layoutY="53.0" text="Avg Weight" AnchorPane.bottomAnchor="55.0" />
+                                          <Label fx:id="growthdata" layoutX="100.0" layoutY="45.0" prefHeight="17.0" prefWidth="25.0" AnchorPane.bottomAnchor="55.0" />
+                                          <Label fx:id="deathdata" layoutX="100.0" layoutY="75.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="100.0" />
+                                          <Label fx:id="avgweightdata" layoutX="250.0" layoutY="75.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="250.0" />
+                                          <Label layoutX="80.0" layoutY="13.0" prefHeight="27.0" prefWidth="140.0" styleClass="label-header" text="Animal Attributes" AnchorPane.topAnchor="13.0" />
+                                          <Label layoutX="150.0" layoutY="86.0" text="Consumption" AnchorPane.bottomAnchor="20.0" />
+                                          <Label fx:id="consumptiondata" layoutX="255.0" layoutY="45.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="250.0" />
                                        </children>
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
                                           <ButtonBar layoutX="20.0" layoutY="167.0" prefHeight="40.0" prefWidth="256.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                                             <buttons>
-                                              <Button mnemonicParsing="false" onAction="#clearsimulation" text="Clear Simulation" />
-                                                <Button mnemonicParsing="false" onAction="#startsimulation" text="Start Simulation" />
+                                              <Button mnemonicParsing="false" onAction="#clearsimulation" prefHeight="32.0" prefWidth="160.0" text="Clear Sim" />
+                                                <Button mnemonicParsing="false" onAction="#startsimulation" prefHeight="32.0" prefWidth="160.0" text="Start Sim" />
                                             </buttons>
                                              <opaqueInsets>
                                                 <Insets />
@@ -107,11 +119,11 @@
                                              </padding>
                                           </ButtonBar>
                                           <ComboBox fx:id="modelbox" layoutX="46.0" layoutY="131.0" prefHeight="25.0" prefWidth="205.0" AnchorPane.bottomAnchor="60.0" />
-                                          <Label layoutX="66.0" layoutY="102.0" text="Choose a Mathematical Model:" AnchorPane.bottomAnchor="95.0" />
-                                          <Label layoutX="68.0" layoutY="21.0" text="Choose a time period in Years:" AnchorPane.bottomAnchor="165.0" />
-                                          <ComboBox fx:id="timebox" layoutX="73.0" layoutY="53.0" prefWidth="150.0" AnchorPane.bottomAnchor="130.0" />
-                                          <CheckBox fx:id="grassbox" layoutX="29.0" layoutY="23.0" mnemonicParsing="false" text="Grass Model" />
-                                          <CheckBox fx:id="predatorbox" layoutX="171.0" layoutY="23.0" mnemonicParsing="false" text="Predator Model" />
+                                          <Label layoutX="53.0" layoutY="121.0" text="Choose a Mathematical Model:" AnchorPane.bottomAnchor="90.0" />
+                                          <Label layoutX="60.0" layoutY="67.0" text="Choose a time period in Years:" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="55.0" />
+                                          <ComboBox fx:id="timebox" layoutX="77.0" layoutY="90.0" prefWidth="150.0" AnchorPane.bottomAnchor="121.0" />
+                                          <CheckBox fx:id="grassbox" layoutX="29.0" layoutY="23.0" mnemonicParsing="false" text="Grass Model" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="25.0" />
+                                          <CheckBox fx:id="predatorbox" layoutX="151.0" layoutY="22.0" mnemonicParsing="false" text="Predator Model" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="150.0" />
                                        </children>
                                     </AnchorPane>
                                 </items>

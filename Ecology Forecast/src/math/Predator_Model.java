@@ -45,5 +45,4 @@ public class Predator_Model {
 		
 		return newpredpop;
 	}
-
 }

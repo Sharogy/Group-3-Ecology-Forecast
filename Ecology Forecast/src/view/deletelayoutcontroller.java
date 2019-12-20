@@ -51,43 +51,14 @@ public class deletelayoutcontroller {
             	
     	animalgrid.setVgap(8);
         animalgrid.setHgap(10);
-        
-//        for (int i=1; i<rows; i++)
-//        {
-//        	Label animallabel = new Label (data[i][0]);
-//        	animallabel.setPrefWidth(100);
-//        	animallabel.setPrefHeight(20);
-//        	animalgrid.add(animallabel, 0, i, 1, 1);
-//        	
-//        	CheckBox deletebox = new CheckBox();
-//        	animalgrid.add(deletebox, 1, i,1,1);      	
-//        }
+     
     }
     
 	@FXML
 	private void confirmHandler()
 	{
 		Boolean answer = AlertBox.display("Deleting Animals", "Are you sure you want to delete?");
-//		if (answer)
-//		{			
-//			for (int i = 0; i<rootcontroller.getData().length-1; i++)
-//			{
-//				CheckBox checkbox = (CheckBox) animalgrid.getChildren().get(i*2+1);
-//				if (checkbox.isSelected())
-//				{
-//					data[i+1][1] = Integer.toString(0); 
-//					System.out.println(data[i+1][1]);
-//				}
-//			}
-//			rootcontroller.setData(data);
-//			rootcontroller root = main.getRoot();
-//			
-//			deletestage.close();
-//		}		
-//		else
-//		{
-//			deletestage.close();
-//		}		
+	
 	}
 	@FXML
 	private void cancelHandler()
