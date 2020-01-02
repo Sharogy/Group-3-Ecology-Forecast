@@ -1,5 +1,6 @@
 package math;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Animal;
@@ -13,14 +14,16 @@ public class Predator_Model {
 	private imodel im;
 	private double predgrowth;
 	private double preddeath;
-	private int oldpredpop;
-	private int newpredpop;
+	private double oldpredpop;
+	private double newpredpop;
 	
 	public int precalc (Animal ani, int timeperiod, boolean grassmode, imodel im) 
 	{
 		//calculates the population for 1 animal for 1 timestep
+		double increaseRate=;
 		
-		return 0;		
+		
+		return population;		
 	}
 	
 	
@@ -33,15 +36,22 @@ public class Predator_Model {
 		this.grassmode = grassmode;
 		this.im = im;
 		
-		return null;
+		List<Integer> a = new ArrayList<Integer>(timeperiod);
+		a.add(oldpop);
+		for (int i=1; i<=timeperiod; i++)
+		{
+			a.add(precalc(ani, i));
+		}
+		
+		return a;
 	}
 	
-	public int getPredPop(int oldpop)
+	public double getPredPop(double oldpop)
 	//calculates the population change for predators, assume growth/death rate of predator is known.
 	{
 		this.oldpredpop = oldpop;
 		//formula here
-		newpredpop = 0;
+		newpredpop = predgrowth * preddeath * oldpop;
 		
 		return newpredpop;
 	}
