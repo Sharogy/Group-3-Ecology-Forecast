@@ -53,9 +53,9 @@ public class Competitive_Model implements imodel{
 	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod , boolean grassmode, boolean predatormode) {
 		// TODO Auto-generated method stub
 		this.animallist = animallist;
-		n1= animallist.get(0).getNumber();
-		n2= animallist.get(1).getNumber();
-		n3= animallist.get(2).getNumber();
+		n1= ( k1 + k3 * a12 * a23 + k2 * a12* a32 - k2 * a21 - k1 * a23 * a32 - k3 * a12 )/ (1+ a12 * a23 * a31 + a13*a21*a32-a21*a12-a23*a32-a13*a31);
+		n2 = (k2+a23*a31*k1+a13*a21*k3-k1*a23-a23*k3-a13*k2*a31)/(1+a12*a23*a31+a13*a21*a31-a21*a12-a23*a32-a13*a31);
+		n3 = (k3+a12*k2*a31+k1*d21*a32-a12*a21*k3+k2*a32+k1*a31)/(1+a12*a23*a31+a13*a21*a32-a21*a12-a23*a32-a13*a31);
 		this.ani = ani;
 		this.timePeriod = timeperiod;
 		this.grassmode = grassmode;
