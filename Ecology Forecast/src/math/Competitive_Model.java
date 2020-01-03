@@ -3,6 +3,8 @@ package math;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.oracle.webservices.internal.api.EnvelopeStyle;
+
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -11,24 +13,35 @@ import model.Animal;
 
 public class Competitive_Model implements imodel{
 	
-	private double a11;
-	private double a12;
-	private double a13;
-	private double a21;
-	private double a22;
+	private double a11 = 1.0;
+	private double a12 = 0.3;
+	private double a13 = 0.3;
+	private double a21 = 3.3;
+	private double a22= 1.0;
 	private double a23;
-	private double a31;
+	private double a31= 3.3;
 	private double a32;
-	private double a33;
-	private int k1;
-	private int k2;
-	private int k3;
+	private double a33 = 1.0;
+	private double k1;
+	private double k2;
+	private double k3;
+	private int n1;
+	private int n2;
+	private int n3;
 
+	// get the data from cal
+	List<Animal> animallist;
+	Animal ani;
+	int timePeriod;
+	boolean grassmode;
+	boolean predatormode;
+
+	double [][] matrixdata = {{a11,a12,a13},{a21,a22,a23},{a31,a32,a33}};
+	double [][] matrixdata2 = {{k1},{k2},{k3}};
+	
 	
 	public int precalc(Animal ani, int timeperiod)
 	{
-		double [][] matrixdata = {{a11,a12,a13},{a21,a22,a23},{a31,a32,a33}};
-		double [][] matrixdata2 = {{k1},{k2},{k3}};
 		RealMatrix interactionmatrix = MatrixUtils.createRealMatrix(matrixdata);
 		RealMatrix capacitymatrix = MatrixUtils.createRealMatrix(matrixdata2);
 		int a = 0;
@@ -39,13 +52,37 @@ public class Competitive_Model implements imodel{
 	@Override
 	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod , boolean grassmode, boolean predatormode) {
 		// TODO Auto-generated method stub
-		List<List<?>> a = new ArrayList();	
+		this.animallist = animallist;
+		n1= animallist.get(0).getNumber();
+		n2= animallist.get(1).getNumber();
+		n3= animallist.get(2).getNumber();
+		this.ani = ani;
+		this.timePeriod = timeperiod;
+		this.grassmode = grassmode;
+		this.predatormode = predatormode;
 		return null;
 	}
 	
+	public boolean calculateK()
+	{
+		k1 = a11 * n1 + a12 * n2 + a13 * n3;
+		k2 = a21 * n1 + a22 * n2 + a23 * n3;
+		k3 = a31 * n1 + a32 * n2 + a33 * n3;
+		return true;
+	}
 	public double getinteraction (int row, int column)
 	{
-		double alphavalue = 0;
+		double alphavalue = 0.0;
+		for(int i=0; i<3;i++)
+		{
+			for(int j=0; j<3; j++)
+			{
+				if(i==row && j== column)
+				{
+					return matrixdata[i][j];
+				}
+			}
+		}
 		return alphavalue;	
 	}
 }
