@@ -19,6 +19,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import math.Exponential_Model;
+import math.Predator_Model;
 import math.Stochastic_Model;
 import model.Animal;
 
@@ -70,19 +71,28 @@ public class lineviewlayoutcontroller implements icontroller {
     
     public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode)
     {
-  	
+    	List<Integer> anidata = null;
+    	
     	for (int j = 0; j < animallist.size(); j++)
     	{
-    		Animal ani = animallist.get(j);
-        	List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);
+    		if (predatormode == true)
+        	{
+        		Predator_Model pm = new Predator_Model();
+        		anidata = pm.calculate(animallist, animallist.get(j), timeperiod, grassmode, im);
+        	}
+    		if (predatormode == false)
+    		{
+    			anidata = im.calculate(animallist, animallist.get(j), timeperiod, grassmode, predatormode);
+    		}
+        	
         	series = new Series<String, Number>();
-            series.setName(ani.getName());
+            series.setName(animallist.get(j).getName());
          	for (int i = 0; i < anidata.size(); i++)
          	{
          		String year = "Year " + Integer.toString(i);
          		series.getData().add(new XYChart.Data(year, anidata.get(i)));
          	}
-         	linechart.getData().add(series);  		
+         	linechart.getData().add(series);  
     	}    	     
     }
     /**

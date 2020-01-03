@@ -40,7 +40,7 @@ public class Competitive_Model implements imodel{
 	double [][] matrixdata2 = {{k1},{k2},{k3}};
 	
 	
-	public int precalc(Animal ani, int timeperiod)
+	public int precalc(List<Animal> animallist, Animal ani, int population,  int timeperiod, boolean grassmode)
 	{
 		RealMatrix interactionmatrix = MatrixUtils.createRealMatrix(matrixdata);
 		RealMatrix capacitymatrix = MatrixUtils.createRealMatrix(matrixdata2);
@@ -73,16 +73,20 @@ public class Competitive_Model implements imodel{
 	public double getinteraction (int row, int column)
 	{
 		double alphavalue = 0.0;
-		for(int i=0; i<3;i++)
-		{
-			for(int j=0; j<3; j++)
-			{
-				if(i==row && j== column)
-				{
-					return matrixdata[i][j];
-				}
-			}
-		}
+		
+		
+//		for(int i=0; i<3;i++)
+//		{
+//			for(int j=0; j<3; j++)
+//			{
+//				if(i==row && j== column)
+//				{
+//					return matrixdata[i][j];
+//				}
+//			}
+//		}
+//		
+		
 		return alphavalue;	
 	}
 }

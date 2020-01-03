@@ -3442,3 +3442,8 @@ is being used to size a border should also be in pixels.
     -fx-opacity: 1;
     -fx-alignment:center;
 }
+
+.root {
+    -fx-background-image: url("/themes/b2.jpg");
+    -fx-background-color: transparent;
+}

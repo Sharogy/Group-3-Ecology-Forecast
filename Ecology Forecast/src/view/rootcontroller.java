@@ -166,23 +166,30 @@ public class rootcontroller {
      */
     @FXML
     private void initialize() throws IOException {
+    	//populated animal table
     	animalnameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
     	animalnotesColumn.setCellValueFactory(cellData -> cellData.getValue().notesProperty());
     	animaltotalColumn.setCellValueFactory(cellData -> cellData.getValue().totalProperty());
-    	
-    	showAnimalDetails(null);
-    	
+    	showAnimalDetails(null);	
     	animalTable.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> showAnimalDetails(newValue));
     	
+    	//loading configuration
     	loaddrawingboard();
     	loadview(lineloader, linepane);  
     	checkboxconfig();
     	spawncombobox(); 
     	modelsearch();
+    	graphics();
     	header.setTextAlignment(TextAlignment.CENTER);
     	header2.setTextAlignment(TextAlignment.CENTER);
     	
+    	
     }
+    
+    private void graphics() {
+    }
+    
+    //search models in math package
         
     private void modelsearch()
     {

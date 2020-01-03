@@ -16,9 +16,13 @@ public class Exponential_Model implements imodel {
 	private boolean grassmode;
 	private boolean predatormode;
 	
-	private int precalc(Animal ani, int timeperiod)
+	public int precalc(List<Animal> animallist, Animal ani, int population, int timeperiod, boolean grassmode)
 	{	
-		
+		this.animallist = animallist;
+		this.oldpop = population;
+		this.birth = ani.getGrowthrate();
+		this.death = ani.getDeathrate();
+		this.grassmode = grassmode;
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
 		double teller = CarryingCapacity_Model.getCarrycapacity(ani, animallist, grassmode);
@@ -31,18 +35,11 @@ public class Exponential_Model implements imodel {
 	@Override
 	public List<Integer> calculate(List<Animal> animallist, Animal ani, int timeperiod , boolean grassmode, boolean predatormode)
 	{		
-		this.oldpop = ani.getNumber();
-		this.birth = ani.getGrowthrate();
-		this.death = ani.getDeathrate();
-		this.animallist = animallist;
-		this.grassmode = grassmode;
-		this.predatormode = predatormode;
 
 		List<Integer> a = new ArrayList<Integer>(timeperiod);
-		a.add(oldpop);
-		for (int i=1; i <= timeperiod; i++) 
+		for (int i=0; i <= timeperiod; i++) 
 		{
-			a.add(precalc(ani, i));			
+			a.add(precalc(animallist, ani, ani.getNumber(), i, grassmode));			
 		}
 		return a;
 	}
@@ -52,8 +49,10 @@ public class Exponential_Model implements imodel {
 		List<Integer> popoutcome;
 		AnimalFactory af = AnimalFactory.getInstance();
 		Animal ani = af.getAnimals().get(0);
+		List<Animal> anilist = af.getAnimals();
 		Exponential_Model lm = new Exponential_Model();
-		popoutcome = lm.calculate(af.getAnimals(), ani, 2, lm.grassmode, lm.predatormode);
+		popoutcome = lm.calculate(af.getAnimals(), ani, 10, lm.grassmode, lm.predatormode);
+		//System.out.println(popoutcome.size());
 		for (int i = 0; i< popoutcome.size(); i++)
 		{
 			System.out.println(popoutcome.get(i));

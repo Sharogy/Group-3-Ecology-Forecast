@@ -12,7 +12,7 @@ public class Stochastic_Model implements imodel{
 	private double birth;
 	private double death;
 	
-	public int precalc(Animal ani, int timeperiod)
+	public int precalc(List<Animal> anilist, Animal ani, int population, int timeperiod, boolean grassmode)
 	{
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
@@ -32,7 +32,7 @@ public class Stochastic_Model implements imodel{
 		a.add(oldpop);
 		for (int i=1; i <= timeperiod; i++) 
 		{
-			a.add(precalc(ani, i));			
+			a.add(precalc(animallist, ani, ani.getNumber(), i, grassmode));			
 		}
 		return a;
 	}
