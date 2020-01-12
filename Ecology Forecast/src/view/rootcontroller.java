@@ -100,7 +100,7 @@ public class rootcontroller {
     @FXML
     private TableColumn<Animal, Number> animaltotalColumn;
     
-    private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years");
+    private ObservableList<String> timeoptions = FXCollections.observableArrayList("1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years", "7 Years", "8 Years", "9 Years", "10 Years", "11 Years", "12 Years", "13 Years", "14 Years", "15 Years");
     private ObservableList<String> modeloptions;
     private int timeperiod;
     @FXML
@@ -283,10 +283,12 @@ public class rootcontroller {
     private void startsimulation()
     {
     	clearsimulation();
+    	competitive = false;
     	if (selectedmodel.equalsIgnoreCase("Competitive Model"))
     	{
     		competitive = true;
     	}
+    	//System.out.println(competitive);
     	modelfactory mf = new modelfactory();
     	imodel im = mf.getModel(selectedmodel);
     	String[] split = selectedtime.split("\\s+");

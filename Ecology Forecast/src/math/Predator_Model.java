@@ -161,13 +161,15 @@ public class Predator_Model {
 	public static void main(String[] argz)
 	{
 		List<List<Integer>> popoutcome;
-		List<Integer>popoutcome2;
+		List<List<Integer>>popoutcome2;
 		AnimalFactory af = AnimalFactory.getInstance();
 		List<Animal> anilist = af.getAnimals();
 		Exponential_Model im = new Exponential_Model();
+		Logistic_Model im2 = new Logistic_Model();
 		Predator_Model pm = new Predator_Model();
 		//popoutcome2 = im.calculate(anilist, anilist.get(0), 10, false, false);
-		popoutcome = pm.calculate(anilist, 3, true, im, 10, true);
+		popoutcome = pm.calculate(anilist, 5, true, im, 10, false);
+		popoutcome2 = pm.calculate(anilist, 5, true, im2, 10, false);
 		List<Integer> pred = pm.getPredPopulation();
 		
 		//System.out.println(popoutcome.size());
@@ -175,7 +177,9 @@ public class Predator_Model {
 		for (int i = 0; i< popoutcome.size(); i++)
 		{
 			List<Integer> anipop = popoutcome.get(i);
+			
 			System.out.println(popoutcome.get(i));
+			System.out.println(popoutcome2.get(i));
 		}
 		System.out.println(pred);
 	}
