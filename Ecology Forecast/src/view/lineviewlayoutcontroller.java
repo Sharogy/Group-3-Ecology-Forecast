@@ -1,6 +1,7 @@
 package view;
 
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -57,6 +58,7 @@ public class lineviewlayoutcontroller implements icontroller {
 
         xAxis.setLabel("Time in Years");
         yAxis.setLabel("Total number of animals");
+        xAxis.setAnimated(false);
     }
     
     public void cleardata()
@@ -69,31 +71,77 @@ public class lineviewlayoutcontroller implements icontroller {
     }
     
     
-    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount)
     {
     	List<Integer> anidata = null;
-    	
-    	for (int j = 0; j < animallist.size(); j++)
+    	if (predatormode == false)
     	{
-    		if (predatormode == true)
+    		for (int j = 0; j < animallist.size(); j++)
         	{
-        		Predator_Model pm = new Predator_Model();
-        		anidata = pm.calculate(animallist, animallist.get(j), timeperiod, grassmode, im);
+       			anidata = im.calculate(animallist, animallist.get(j), timeperiod, grassmode, predatormode);
+           	
+            	series = new Series<String, Number>();
+                series.setName(animallist.get(j).getName());
+             	for (int i = 0; i < anidata.size(); i++)
+             	{
+             		String year = "Year " + Integer.toString(i);
+             		series.getData().add(new XYChart.Data(year, anidata.get(i)));
+             		//System.out.println(anidata.get(i));
+             	}         	
+             	linechart.getData().add(series);        	
         	}
-    		if (predatormode == false)
+    	}
+    	if (predatormode == true)
+    	{
+    		Predator_Model pm = new Predator_Model();
+    		List<List<Integer>> anidata2 = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+    		//System.out.println(anidata2.get(0));
+    		List<Animal> newanimallist = new ArrayList<Animal>();
+    		List<Integer> predator = pm.getPredPopulation();   
+    		anidata2.add(predator);
+    		for (Animal ani: animallist)
     		{
-    			anidata = im.calculate(animallist, animallist.get(j), timeperiod, grassmode, predatormode);
+    			if (ani.getType().equalsIgnoreCase("Primary"))
+    			{
+    				newanimallist.add(ani);
+    			}
     		}
-        	
-        	series = new Series<String, Number>();
-            series.setName(animallist.get(j).getName());
-         	for (int i = 0; i < anidata.size(); i++)
-         	{
-         		String year = "Year " + Integer.toString(i);
-         		series.getData().add(new XYChart.Data(year, anidata.get(i)));
-         	}
-         	linechart.getData().add(series);  
-    	}    	     
+    		for (Animal ani: animallist)
+    		{
+    			if (!ani.getType().equalsIgnoreCase("Primary"))
+    			{
+    				newanimallist.add(ani);
+    			}
+    		}
+    		
+    		for (int j = 0; j < anidata2.size(); j++)
+        	{        
+    			if (j<anidata2.size()-1)
+    			{
+    				series = new Series<String, Number>();
+                    series.setName(newanimallist.get(j).getName());
+                 	for (int i = 0; i < anidata2.get(j).size(); i++)
+                 	{
+                 		String year = "Year " + Integer.toString(i);
+                 		series.getData().add(new XYChart.Data(year, anidata2.get(j).get(i)));
+                 		//System.out.println(anidata2.get(j).get(i));
+                 	}         	
+                 	linechart.getData().add(series);     
+    			}
+    			else
+    			{
+    				series = new Series<String, Number>();
+                    series.setName("Gray Wolves");
+                 	for (int i = 0; i < anidata2.get(j).size(); i++)
+                 	{
+                 		String year = "Year " + Integer.toString(i);
+                 		series.getData().add(new XYChart.Data(year, anidata2.get(j).get(i)));
+                 		//System.out.println(anidata2.get(j).get(i));
+                 	}         	
+                 	linechart.getData().add(series);     
+    			}
+        	} 
+    	} 	     
     }
     /**
      * Sets the persons to show the statistics for.

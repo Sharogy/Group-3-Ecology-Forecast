@@ -36,7 +36,9 @@ public class AnimalFactory {
 			for (int i = 1; i<data.length; i++)
 			{	
 				//System.out.println(data[i][7]);
-				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7]);
+				//Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7], i, data[i][8]);
+				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7], data[i][8], data[i][9]);
+				//Animal ani = new Animal();
 				animallist.add(ani);			
 			}
 		} catch (InvalidFormatException e) {

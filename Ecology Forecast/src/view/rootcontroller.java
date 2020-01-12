@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -36,6 +37,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import math.Exponential_Model;
+import math.Predator_Model;
 import math.modelfactory;
 import model.Animal;
 import model.AnimalFactory;
@@ -117,6 +119,15 @@ public class rootcontroller {
     private Label avgweightdata;
     @FXML
     private Label consumptiondata;
+    
+    @FXML
+    private Label wolflabel;
+    @FXML
+    private Slider wolfslider;
+    @FXML
+    private Button wolfbutton;
+    @FXML
+    private TextField predpop;
 
     //Local attributes
     private Main main;
@@ -146,6 +157,8 @@ public class rootcontroller {
     private String selectedmodel = "Exponential Model";
     private boolean selectedgrass = true;
     private boolean selectedpredator = false;
+    
+    private int wolfcount;
     
     private String theme = getClass().getResource("/themes/modena.css").toExternalForm();
     private String theme1 = getClass().getResource("/themes/caspian.css").toExternalForm();
@@ -183,7 +196,29 @@ public class rootcontroller {
     	header.setTextAlignment(TextAlignment.CENTER);
     	header2.setTextAlignment(TextAlignment.CENTER);
     	
-    	
+		predpop.setVisible(false);
+		wolflabel.setVisible(false);
+		wolfslider.setVisible(false);
+		wolfbutton.setVisible(false);
+		
+		sliderconfig();
+		
+		wolfslider.valueProperty().addListener(new ChangeListener<Number>() {
+	        public void changed(ObservableValue<? extends Number> ov,
+	            Number old_val, Number new_val) {
+	        		wolfslider.setValue((int) Math.round(new_val.doubleValue()));
+	                predpop.setText(String.valueOf((int) Math.round(new_val.doubleValue())));
+	        }
+	    });
+
+		predpop.textProperty().addListener((observable, oldValue, newValue) -> {
+			try {
+				wolfslider.setValue((int) Math.round(Double.valueOf(newValue)));
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Wrong Value");
+			}
+		});
     }
     
     private void graphics() {
@@ -258,16 +293,39 @@ public class rootcontroller {
     	statcontroller = statloader.getController();
     	    	
     	try {
-    		if (animallist.size() == 0) {
+    		if (animallist.size() == 0) 
+    			{
         		throw new NullPointerException("Animalist is Empty");
-        	}
-    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
-    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
-    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
-    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator);
+    			}
+    	
+
+    			if (selectedpredator)
+    				{
+    				wolfcount = Integer.valueOf(predpop.getText());
+    				}
+		    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
+		    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
+		    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
+		    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
+		    	Predator_Model pm = new Predator_Model();
+		    	List<Integer> predator = pm.getPredPopulation();
+		    	if (predator != null)
+		    		{
+		    		predpop.setText(String.valueOf(predator.get(predator.size()-1)));
+		    		}    		 	
     	}
-    	catch (NullPointerException e)
+    	catch (NumberFormatException e)
     	{
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("Wrong number");
+            alert.setHeaderText("The number of wolves is not an integer");
+            alert.setContentText("Please input an integer for the number of wolves.");
+
+            alert.showAndWait();
+    	}	
+    	catch (NullPointerException e)
+		{
     		Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No Animal Data");
@@ -275,7 +333,7 @@ public class rootcontroller {
             alert.setContentText("Please load the animal data from an existing file or load the preset data.");
 
             alert.showAndWait();
-    	}   	
+		}  
     }
     
     @FXML
@@ -403,15 +461,31 @@ public class rootcontroller {
     	grassbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov,
                     Boolean old_val, Boolean new_val) {
-                    System.out.println(grassbox.isSelected());
+                    //System.out.println(grassbox.isSelected());
                     selectedgrass = grassbox.isSelected();
                  }
                });
     	predatorbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov,
             		Boolean old_val, Boolean new_val) {
-            		System.out.println(predatorbox.isSelected());
+            		//System.out.println(predatorbox.isSelected());
             		selectedpredator = predatorbox.isSelected();
+            		if (!selectedpredator)
+            		{
+            			predpop.setVisible(false);
+            			wolflabel.setVisible(false);
+            			wolfslider.setVisible(false);
+            			wolfbutton.setVisible(false);
+            		}
+            		if (selectedpredator)
+            		{
+            			predpop.setVisible(true);
+            			wolflabel.setVisible(true);
+            			wolfslider.setVisible(true);
+            			wolfbutton.setVisible(true);
+            			predpop.setText("10");
+            			wolfslider.setValue(10);
+            		}
             }
         });
     }
@@ -560,6 +634,9 @@ public class rootcontroller {
     				selectedmodel = String.valueOf(modelbox.getValue());
     			}
     		};
+    		
+    
+
     
     private void spawncombobox() 
     {
@@ -573,5 +650,16 @@ public class rootcontroller {
     	modelbox.setOnAction(modelevent);	
     }
     
+    private void sliderconfig()
+    {
+    	wolfslider.setMax(50);
+    	wolfslider.setMin(0);
+    	wolfslider.setBlockIncrement(1);
+    	wolfslider.setShowTickLabels(true);
+    	wolfslider.setShowTickMarks(true);    	
+    }
     
+    
+   
 }
+

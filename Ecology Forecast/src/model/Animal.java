@@ -15,16 +15,18 @@ public class Animal {
 	private DoubleProperty deathrate;
 	private DoubleProperty consumptionrate;
 	private DoubleProperty avgweight;
+	private StringProperty type;
 	private StringProperty notes;
 	private IntegerProperty carrying;
+	private IntegerProperty preylikelihood;
 	
 	
 	public Animal()
 	{
-		this(null,0,0,0,0,0,0,null);
+		this(null,0,0,0,0,0,0,null, null, null);
 	}
 	
-	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, int carrying, String notes)
+	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, int carrying, String type, String preylikelihood, String notes)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.total = new SimpleIntegerProperty(total);
@@ -34,6 +36,16 @@ public class Animal {
 		this.avgweight = new SimpleDoubleProperty(avgweight);
 		this.notes = new SimpleStringProperty(notes);		
 		this.carrying = new SimpleIntegerProperty(carrying);
+		this.type = new SimpleStringProperty(type);
+		if (preylikelihood == null)
+		{
+			this.preylikelihood = new SimpleIntegerProperty(0);
+		}
+		else
+		{
+			this.preylikelihood = new SimpleIntegerProperty(Integer.valueOf(preylikelihood));
+		}
+		
 	}
 
 	public String getName() {
@@ -113,6 +125,29 @@ public class Animal {
 	{
 		return avgweight;
 	}
+	public int getCarrying() {
+		return carrying.get();
+	}
+	public void setCarrying (int carrying) {
+		this.carrying.set(carrying);
+	}
+	public IntegerProperty carryingProperty()
+	{
+		return carrying;
+	}
+	
+	public String getType() {
+		return type.get();
+	}
+	
+	public void setType(String type)
+	{
+		this.type.set(type);
+	}
+	public StringProperty typeProperty()
+	{
+		return type;
+	}
 	
 	public String getNotes() {
 		return notes.get();
@@ -124,15 +159,15 @@ public class Animal {
 	{
 		return notes;
 	}
-	public int getCarrying() {
-		return carrying.get();
+	public int getPreylikelihood() {
+		return preylikelihood.get();
 	}
-	public void setCarrying (int carrying) {
-		this.carrying.set(carrying);
+	public void setPreylikelihood (int preylikelihood) {
+		this.preylikelihood.set(preylikelihood);
 	}
-	public IntegerProperty carryingProperty()
+	public IntegerProperty PreylikelihoodProperty()
 	{
-		return carrying;
+		return preylikelihood;
 	}
-
+	
 }

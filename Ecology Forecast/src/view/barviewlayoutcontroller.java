@@ -13,6 +13,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import math.Predator_Model;
 import model.Animal;
 
 public class barviewlayoutcontroller implements icontroller {
@@ -45,31 +46,83 @@ public class barviewlayoutcontroller implements icontroller {
 		yAxis.setLabel("Population");
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode )
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount )
 	{
-		for (int i = 0; i< timeperiod+1; i++)
+		if (predatormode == false)
 		{
-			categories.add("Year " + String.valueOf(i));
-		}
-		xAxis.setCategories(FXCollections.<String>observableArrayList(categories));
-		
-		bardatacollection = new ArrayList<List<Integer>>();
-		for (int i = 0; i< animallist.size(); i++)
-		{
-			Animal ani = animallist.get(i);
-			List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
-			bardatacollection.add(anidata);
-		}
-		
-		for (int i = 0; i< animallist.size(); i++)
-		{
-			XYChart.Series<String, Number> series = new XYChart.Series<>();
-			series.setName(animallist.get(i).getName());
-			for (int j = 0; j < timeperiod + 1; j++)
+			for (int i = 0; i< timeperiod+1; i++)
 			{
-				series.getData().add(new XYChart.Data<>(categories.get(j),bardatacollection.get(i).get(j)));
+				categories.add("Year " + String.valueOf(i));
 			}
-			stackedbarchart.getData().add(series);			
+			xAxis.setCategories(FXCollections.<String>observableArrayList(categories));
+			
+			bardatacollection = new ArrayList<List<Integer>>();
+			for (int i = 0; i< animallist.size(); i++)
+			{
+				Animal ani = animallist.get(i);
+				List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
+				bardatacollection.add(anidata);
+			}
+			
+			for (int i = 0; i< animallist.size(); i++)
+			{
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.setName(animallist.get(i).getName());
+				for (int j = 0; j < timeperiod + 1; j++)
+				{
+					series.getData().add(new XYChart.Data<>(categories.get(j),bardatacollection.get(i).get(j)));
+				}
+				stackedbarchart.getData().add(series);			
+			}
+		}
+		if (predatormode == true)
+		{
+			for (int i = 0; i< timeperiod+1; i++)
+			{
+				categories.add("Year " + String.valueOf(i));
+			}
+			xAxis.setCategories(FXCollections.<String>observableArrayList(categories));
+			
+			bardatacollection = new ArrayList<List<Integer>>();
+			Predator_Model pm = new Predator_Model();
+			
+			List<List<Integer>>anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+			List<Integer> predator = pm.getPredPopulation();
+			anidata.add(predator);
+			
+			for (int i = 0; i< anidata.size(); i++)
+			{
+				bardatacollection.add(anidata.get(i));
+			}
+			
+			List<Animal> newanimallist = new ArrayList<Animal>();
+    		for (Animal ani: animallist)
+    		{
+    			if (ani.getType().equalsIgnoreCase("Primary"))
+    			{
+    				newanimallist.add(ani);
+    			}
+    		}
+    		for (Animal ani: animallist)
+    		{
+    			if (!ani.getType().equalsIgnoreCase("Primary"))
+    			{
+    				newanimallist.add(ani);
+    			}
+    		}
+    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0.0, 0, null, null, null);
+    		newanimallist.add(ani);
+    		
+			for (int i = 0; i< newanimallist.size(); i++)
+			{
+				XYChart.Series<String, Number> series = new XYChart.Series<>();
+				series.setName(newanimallist.get(i).getName());
+				for (int j = 0; j < timeperiod + 1; j++)
+				{
+					series.getData().add(new XYChart.Data<>(categories.get(j),bardatacollection.get(i).get(j)));
+				}
+				stackedbarchart.getData().add(series);			
+			}
 		}
 	}
 	

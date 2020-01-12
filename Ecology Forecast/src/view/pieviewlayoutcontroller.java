@@ -11,7 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.ComboBox;
+import math.Predator_Model;
 import model.Animal;
 
 public class pieviewlayoutcontroller implements icontroller {
@@ -52,31 +55,69 @@ public class pieviewlayoutcontroller implements icontroller {
 		piechart2.setData(pieChartData2);	
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode) 
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount) 
 	{
 		this.animallist = animallist;
 		this.timeperiod = timeperiod;
 		piedatacollection = new ArrayList<List<Integer>>();
-		for (int i = 0; i< animallist.size(); i++)
-		{
-			Animal ani = animallist.get(i);
-			List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
-			piedatacollection.add(anidata);
-		}
-		spawncombobox();
-		for (int i = 0; i< timeperiod+1; i++)
-		{
-			popoptions.add("Year " + String.valueOf(i) + " " + "Population");
-		}
 		
-		popbox1.setItems(popoptions);
-		popbox2.setItems(popoptions);
-		
-		pieChartData.clear();
-		pieChartData2.clear();
-		
-		pieChartData.addAll(generatepiedata(animallist, 0, piedatacollection));
-		pieChartData2.addAll(generatepiedata(animallist, 1, piedatacollection));
+    	if (predatormode == false)
+    	{
+    		for (int i = 0; i< animallist.size(); i++)
+    		{
+    			Animal ani = animallist.get(i);
+    			List<Integer> anidata = im.calculate(animallist, ani, timeperiod, grassmode, predatormode);		
+    			piedatacollection.add(anidata);
+    		}
+    		spawncombobox(timeperiod);
+    		for (int i = 0; i< timeperiod+1; i++)
+    		{
+    			popoptions.add("Year " + String.valueOf(i) + " " + "Population");
+    		}
+    		
+    		popbox1.setItems(popoptions);
+    		popbox2.setItems(popoptions);
+    		
+    		pieChartData.clear();
+    		pieChartData2.clear();
+    		
+    		pieChartData.addAll(generatepiedata(animallist, 0, piedatacollection));
+    		pieChartData2.addAll(generatepiedata(animallist, timeperiod, piedatacollection));
+    	}
+    	if (predatormode == true)
+    	{
+    		Predator_Model pm = new Predator_Model();
+    		List<List<Integer>> anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+    		anidata.add(pm.getPredPopulation());
+    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0.0, 0, null, null, null);
+    		ObservableList<Animal> anilist = FXCollections.observableArrayList();
+    		for (int i = 0; i<animallist.size(); i++)
+    		{
+    			anilist.add(animallist.get(i));
+    		}
+    		anilist.add(ani);
+    		
+    		for (int i = 0; i<anidata.size(); i++)
+    		{
+    			piedatacollection.add(anidata.get(i));
+    		}
+    		
+    		spawncombobox(timeperiod);
+    		
+    		for (int i = 0; i< timeperiod+1; i++)
+    		{
+    			popoptions.add("Year " + String.valueOf(i) + " " + "Population");
+    		}
+    		
+    		popbox1.setItems(popoptions);
+    		popbox2.setItems(popoptions);
+    		
+    		pieChartData.clear();
+    		pieChartData2.clear();
+    		
+    		pieChartData.addAll(generatepiedata(anilist, 0, piedatacollection));
+    		pieChartData2.addAll(generatepiedata(anilist, timeperiod, piedatacollection));
+    	}
 	}
 	
 	
@@ -129,6 +170,18 @@ public class pieviewlayoutcontroller implements icontroller {
     	
     	popbox2.setVisibleRowCount(5);
     	popbox2.setValue("Year 1 Population");
+    	popbox2.setOnAction(popevent2);	
+    }
+    private void spawncombobox(int year)
+    {
+    	String title = "Year " +  String.valueOf(year) + " Population";
+    	popbox1.setVisibleRowCount(5);
+    	popbox1.setValue("Year 0 Population");
+    	popbox1.setOnAction(popevent1);
+    	
+    	
+    	popbox2.setVisibleRowCount(5);
+    	popbox2.setValue(title);
     	popbox2.setOnAction(popevent2);	
     }
     

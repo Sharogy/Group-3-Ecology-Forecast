@@ -47,15 +47,18 @@ public class Exponential_Model implements imodel {
 	public static void main(String[] argz)
 	{
 		List<Integer> popoutcome;
+		int popoutcome2;
 		AnimalFactory af = AnimalFactory.getInstance();
 		Animal ani = af.getAnimals().get(0);
 		List<Animal> anilist = af.getAnimals();
 		Exponential_Model lm = new Exponential_Model();
-		popoutcome = lm.calculate(af.getAnimals(), ani, 10, lm.grassmode, lm.predatormode);
+		popoutcome2 = lm.precalc(anilist, ani, 1694, 1, false);
+		popoutcome = lm.calculate(af.getAnimals(), ani, 10, false, false);
 		//System.out.println(popoutcome.size());
 		for (int i = 0; i< popoutcome.size(); i++)
 		{
 			System.out.println(popoutcome.get(i));
 		}
+		System.out.println(popoutcome2);
 	}
 }

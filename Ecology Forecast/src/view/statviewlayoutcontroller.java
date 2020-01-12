@@ -39,7 +39,7 @@ public class statviewlayoutcontroller implements icontroller{
     {  	
     }
     
-    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount)
     {
     	//spawn columns
     	

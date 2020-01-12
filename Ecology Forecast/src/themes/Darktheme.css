@@ -177,19 +177,30 @@
 }
 
 .chart {
-    -fx-background-image: url("b1.jpg");
+    -fx-padding: 5px;
 }
 .chart-content {
-    -fx-padding: 30px;    
+    -fx-padding: 10px;
 }
  
 .chart-title {
-  -fx-text-fill: #4682b4;
+  -fx-text-fill: white;
   -fx-font-size: 1.6em;
 }
+
+.chart-pie-label-line {
+    -fx-stroke: #8b4513;
+    -fx-fill: #8b4513;
+}
+ 
+.chart-pie-label {
+    -fx-fill: #8b4513;
+    -fx-font-size: 1em;
+} 
  
 .axis-label {
-  -fx-text-fill: #4682b4;
+  -fx-text-fill: white;
+  -fx-font-size: 1.4em;
 }
  
 .chart-legend {
@@ -202,7 +213,8 @@
 }
  
 .chart-legend-item{
-    -fx-text-fill: #191970;
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
 }
  
 .chart-plot-background {

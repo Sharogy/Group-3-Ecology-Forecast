@@ -13,19 +13,28 @@ import Util.Settings;
 	public class CarryingCapacity_Model {
 		
 		private static Map<String, Double> carryingcapacity = new HashMap<String, Double>();
+		private static int horsestatus;
 		
 		public static Map<String, Double> calculate(List<Animal> animallist) {
 			if (carryingcapacity.size() == 0)
 			{
-				for (Animal ani: animallist)
+				for (int i = 0; i<animallist.size(); i++)
 				{
-					String name = ani.getName();
-					double foodcapacityperanimal = grasscapacity()/(animallist.size()+1);
-					if (ani.getName().equalsIgnoreCase("Konik Horse"))
+					if (animallist.get(i).getName().equalsIgnoreCase("Konik Horse"))
+					{
+						horsestatus = 1;
+					}
+				}
+				for (int i = 0; i<animallist.size(); i++)
+				{
+					String name;
+					name = animallist.get(i).getName();
+					double foodcapacityperanimal = grasscapacity()/(animallist.size()+horsestatus);
+					if (animallist.get(i).getName().equalsIgnoreCase("Konik Horse"))
 					{
 						foodcapacityperanimal = 2*foodcapacityperanimal;
 					}
-					double carryingcapacityperanimal = foodcapacityperanimal / ani.getAvgweight() / ani.getConsumptionrate() / 0.02 / 300;	
+					double carryingcapacityperanimal = foodcapacityperanimal / animallist.get(i).getAvgweight() / animallist.get(i).getConsumptionrate() / 0.02 / 300;	
 					carryingcapacity.put(name, carryingcapacityperanimal);
 				}
 			}			
