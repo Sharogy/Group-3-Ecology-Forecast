@@ -35,6 +35,7 @@ import Util.Settings;
 						foodcapacityperanimal = 2*foodcapacityperanimal;
 					}
 					double carryingcapacityperanimal = foodcapacityperanimal / animallist.get(i).getAvgweight() / animallist.get(i).getConsumptionrate() / 0.02 / 300;	
+					//System.out.println(carryingcapacityperanimal);
 					carryingcapacity.put(name, carryingcapacityperanimal);
 				}
 			}			

@@ -46,7 +46,7 @@ public class barviewlayoutcontroller implements icontroller {
 		yAxis.setLabel("Population");
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount )
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount, boolean competitive )
 	{
 		if (predatormode == false)
 		{
@@ -86,7 +86,7 @@ public class barviewlayoutcontroller implements icontroller {
 			bardatacollection = new ArrayList<List<Integer>>();
 			Predator_Model pm = new Predator_Model();
 			
-			List<List<Integer>>anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+			List<List<Integer>>anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount, competitive);
 			List<Integer> predator = pm.getPredPopulation();
 			anidata.add(predator);
 			

@@ -55,7 +55,7 @@ public class pieviewlayoutcontroller implements icontroller {
 		piechart2.setData(pieChartData2);	
 	}
 	
-	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount) 
+	public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount, boolean competitive) 
 	{
 		this.animallist = animallist;
 		this.timeperiod = timeperiod;
@@ -87,7 +87,7 @@ public class pieviewlayoutcontroller implements icontroller {
     	if (predatormode == true)
     	{
     		Predator_Model pm = new Predator_Model();
-    		List<List<Integer>> anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+    		List<List<Integer>> anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount, competitive);
     		anidata.add(pm.getPredPopulation());
     		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0.0, 0, null, null, null);
     		ObservableList<Animal> anilist = FXCollections.observableArrayList();

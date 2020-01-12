@@ -23,7 +23,7 @@ public class Predator_Model {
 	
 	private static List<Integer> predpopulation;
 		
-	public List<List<Integer>> calculate(List<Animal> animallist, int timeperiod, boolean grassmode, imodel im, int wolfcount) {
+	public List<List<Integer>> calculate(List<Animal> animallist, int timeperiod, boolean grassmode, imodel im, int wolfcount, boolean competitive) {
 		// calculates the population for 1 animal for N timesteps, returns a List<Integer>, see Exponential/Logistic model for example
 		
 		this.animallist = animallist;
@@ -47,39 +47,93 @@ public class Predator_Model {
 				primaryanimalcount = animallist.get(i).getNumber()*animallist.get(i).getPreylikelihood() + primaryanimalcount;
 				allanimalpop.add(animalpop);
 			}		
-		}		
-		
-		for (int i = 0; i < timeperiod; i++)
-		{
-			double newprimaryanimalcount = 0;
-			for (int j = 0; j<primarycount; j++)
-			{
-				List<Integer> currentanimalcount = allanimalpop.get(j);
-				int time = i+1;
-				Animal currentanimal = animallist.get(j);
-				double currentanimalmeatweight = currentanimal.getAvgweight()*2/3;
-				double eaten = requirement*currentanimalcount.get(i)*currentanimal.getPreylikelihood()/primaryanimalcount/currentanimalmeatweight;
-				
-				double nextanipop = im.precalc(animallist, currentanimal, (int) Math.round(currentanimalcount.get(i)), 1, grassmode)-eaten;
-				//System.out.println(eaten);
-				allanimalpop.get(j).add((int) Math.round(nextanipop));
-				newprimaryanimalcount = newprimaryanimalcount + nextanipop*currentanimal.getPreylikelihood();
-				//System.out.println(newpredpop);
-				//System.out.println(Math.round(nextanipop));
-				
-			}
-			newpredpop = getPredPop(newpredpop, i+1);
-			requirement = consumption * newpredpop * 365 * primarymeatratio;	
-			predpopulation.add((int) Math.round(newpredpop));
-			primaryanimalcount = newprimaryanimalcount;
-			//System.out.println(primaryanimalcount);
 		}
+		
+		if (competitive)
+		{
+			List<Animal> primarylist = new ArrayList<Animal>();
+			for (int i = 0; i<animallist.size(); i++)
+			{
+				if (animallist.get(i).getType().equalsIgnoreCase("Primary"))
+				{
+					primarylist.add(animallist.get(i));
+					//System.out.println(primarylist.get(i).getName());
+				}
+			}
+			
+			Competitive_Model cm = new Competitive_Model();
+			for (int i = 0; i < timeperiod; i++)
+			{
+				for (int j = 0; j<primarycount; j++)
+				{
+					List<Integer> currentanimalcount = allanimalpop.get(j);
+					//System.out.println("current animal");
+					//System.out.println(currentanimalcount);
+					
+					List<Integer> temppop = new ArrayList<Integer>();
+					for (int k = 0; k<3; k++)
+					{
+						//System.out.println(allanimalpop.get(k).get(0));
+						temppop.add(allanimalpop.get(k).get(i));
+					}
+					//System.out.println(temppop);
+					int time = i+1;
+					Animal currentanimal = primarylist.get(j);
+					//System.out.println(currentanimal.getName());
+					double currentanimalmeatweight = currentanimal.getAvgweight()*2/3;
+					double eaten = requirement*temppop.get(j)*currentanimal.getPreylikelihood()/primaryanimalcount/currentanimalmeatweight;
+					//System.out.println(temppop.get(j));
+					//System.out.println(currentanimal.getPreylikelihood());
+					double nextanipop = cm.precalc(animallist, currentanimal, temppop, timeperiod, grassmode).get(j)-eaten;
+
+					//double nextanipop = im.precalc(animallist, currentanimal, (int) Math.round(currentanimalcount.get(i)), 1, grassmode)-eaten;
+					allanimalpop.get(j).add((int) Math.round(nextanipop));
+				}
+				newpredpop = getPredPop(newpredpop, i+1);
+				requirement = consumption * newpredpop * 365 * primarymeatratio;	
+				predpopulation.add((int) Math.round(newpredpop));
+				primaryanimalcount = 0;
+				for (int j = 0; j<primarycount; j++)
+				{
+					primaryanimalcount = allanimalpop.get(j).get(i)*animallist.get(j).getPreylikelihood()+primaryanimalcount;
+				}
+			}
+		}
+		if (!competitive)
+		{
+			for (int i = 0; i < timeperiod; i++)
+			{
+				for (int j = 0; j<primarycount; j++)
+				{
+					List<Integer> currentanimalcount = allanimalpop.get(j);
+					//System.out.println("current animal");
+					//System.out.println(currentanimalcount);
+					int time = i+1;
+					Animal currentanimal = animallist.get(j);
+					double currentanimalmeatweight = currentanimal.getAvgweight()*2/3;
+					double eaten = requirement*currentanimalcount.get(i)*currentanimal.getPreylikelihood()/primaryanimalcount/currentanimalmeatweight;
+					
+					double nextanipop = im.precalc(animallist, currentanimal, (int) Math.round(currentanimalcount.get(i)), 1, grassmode)-eaten;
+					allanimalpop.get(j).add((int) Math.round(nextanipop));
+				}
+				newpredpop = getPredPop(newpredpop, i+1);
+				requirement = consumption * newpredpop * 365 * primarymeatratio;	
+				predpopulation.add((int) Math.round(newpredpop));
+				primaryanimalcount = 0;
+				for (int j = 0; j<primarycount; j++)
+				{
+					primaryanimalcount = allanimalpop.get(j).get(i)*animallist.get(j).getPreylikelihood()+primaryanimalcount;
+				}
+			}
+		}
+		
 		for (int i = 0; i<animallist.size(); i++)
 		{
 			List<Integer> secondaryanimalpop = new ArrayList<Integer>(timeperiod);
 			if (!animallist.get(i).getType().equals("Primary"))
 			{
-				secondaryanimalpop = im.calculate(animallist, animallist.get(i), timeperiod, grassmode, false);
+				Exponential_Model em = new Exponential_Model();
+				secondaryanimalpop = em.calculate(animallist, animallist.get(i), timeperiod, grassmode, false);
 				allanimalpop.add(secondaryanimalpop);
 			}		
 		}			
@@ -112,11 +166,11 @@ public class Predator_Model {
 		List<Animal> anilist = af.getAnimals();
 		Exponential_Model im = new Exponential_Model();
 		Predator_Model pm = new Predator_Model();
-		popoutcome2 = im.calculate(anilist, anilist.get(0), 10, false, false);
-		popoutcome = pm.calculate(anilist, 20, true, im, 1);
+		//popoutcome2 = im.calculate(anilist, anilist.get(0), 10, false, false);
+		popoutcome = pm.calculate(anilist, 3, true, im, 10, true);
 		List<Integer> pred = pm.getPredPopulation();
 		
-		System.out.println(popoutcome.size());
+		//System.out.println(popoutcome.size());
 		
 		for (int i = 0; i< popoutcome.size(); i++)
 		{

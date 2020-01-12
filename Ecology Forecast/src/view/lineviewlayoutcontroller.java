@@ -12,7 +12,7 @@ import interfaces.icontroller;
 import interfaces.imodel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
+import javafx.fxml.FXML; 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.CategoryAxis;
@@ -21,7 +21,6 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import math.Exponential_Model;
 import math.Predator_Model;
-import math.Stochastic_Model;
 import model.Animal;
 
 /**
@@ -71,7 +70,7 @@ public class lineviewlayoutcontroller implements icontroller {
     }
     
     
-    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount, boolean competitive)
     {
     	List<Integer> anidata = null;
     	if (predatormode == false)
@@ -94,7 +93,7 @@ public class lineviewlayoutcontroller implements icontroller {
     	if (predatormode == true)
     	{
     		Predator_Model pm = new Predator_Model();
-    		List<List<Integer>> anidata2 = pm.calculate(animallist, timeperiod, grassmode, im, packcount);
+    		List<List<Integer>> anidata2 = pm.calculate(animallist, timeperiod, grassmode, im, packcount, competitive);
     		//System.out.println(anidata2.get(0));
     		List<Animal> newanimallist = new ArrayList<Animal>();
     		List<Integer> predator = pm.getPredPopulation();   

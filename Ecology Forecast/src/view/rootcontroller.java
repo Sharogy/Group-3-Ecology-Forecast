@@ -36,6 +36,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import math.CarryingCapacity_Model;
 import math.Exponential_Model;
 import math.Predator_Model;
 import math.modelfactory;
@@ -155,6 +156,7 @@ public class rootcontroller {
     
     private String selectedtime = "3 Years";
     private String selectedmodel = "Exponential Model";
+    private boolean competitive = false;
     private boolean selectedgrass = true;
     private boolean selectedpredator = false;
     
@@ -281,7 +283,10 @@ public class rootcontroller {
     private void startsimulation()
     {
     	clearsimulation();
-    	  	
+    	if (selectedmodel.equalsIgnoreCase("Competitive Model"))
+    	{
+    		competitive = true;
+    	}
     	modelfactory mf = new modelfactory();
     	imodel im = mf.getModel(selectedmodel);
     	String[] split = selectedtime.split("\\s+");
@@ -303,16 +308,11 @@ public class rootcontroller {
     				{
     				wolfcount = Integer.valueOf(predpop.getText());
     				}
-		    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
-		    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
-		    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
-		    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount);
-		    	Predator_Model pm = new Predator_Model();
-		    	List<Integer> predator = pm.getPredPopulation();
-		    	if (predator != null)
-		    		{
-		    		predpop.setText(String.valueOf(predator.get(predator.size()-1)));
-		    		}    		 	
+    			//System.out.println(CarryingCapacity_Model.getCarrycapacity(animallist.get(0), animallist, selectedgrass));
+		    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
+		    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
+		    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
+		    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);  		 	
     	}
     	catch (NumberFormatException e)
     	{

@@ -14,10 +14,6 @@ public class modelfactory {
 		{
 			return new Exponential_Model();	
 		}
-		if (modeltype.equalsIgnoreCase("Stochastic Model"))
-		{
-			return new Stochastic_Model();
-		}
 		if (modeltype.equalsIgnoreCase("Competitive Model"))
 		{
 			return new Competitive_Model();
