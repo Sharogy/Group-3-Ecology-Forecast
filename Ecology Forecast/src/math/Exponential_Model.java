@@ -25,7 +25,8 @@ public class Exponential_Model implements imodel {
 		this.grassmode = grassmode;
 		double increaseRate = birth - death;
 		double power = increaseRate * timeperiod;
-		double teller = CarryingCapacity_Model.getCarrycapacity(ani, animallist, grassmode);
+		CarryingCapacity_Model ccm = new CarryingCapacity_Model();
+		double teller = ccm.getCarrycapacity(ani, animallist, grassmode);
 		double nummer = 1 + ((teller - oldpop)/oldpop)*Math.exp(-power);
 		double newpop = teller/nummer;
 		return (int) Math.round(newpop);

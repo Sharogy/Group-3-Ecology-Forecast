@@ -34,8 +34,8 @@ public class Logistic_Model implements imodel{
 		else
 		{
 			DiscreteGrowthFactor = Birth-Death;
-			
-			double CarryingCap = CarryingCapacity_Model.getCarrycapacity(ani, animallist, grassmode);
+			CarryingCapacity_Model ccm = new CarryingCapacity_Model();
+			double CarryingCap = ccm.getCarrycapacity(ani, animallist, grassmode);
 			
 			FuturePopSize = oldpop + DiscreteGrowthFactor * oldpop*((CarryingCap - oldpop) / CarryingCap);
 			

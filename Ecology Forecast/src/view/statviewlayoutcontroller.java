@@ -245,6 +245,9 @@ public class statviewlayoutcontroller implements icontroller{
 		}
 		anipopdata2.add(row2);
     	stattable2.setItems(anipopdata2);
+    	
+    	stattable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+    	stattable2.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
     }
         

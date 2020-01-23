@@ -145,22 +145,26 @@ public class rootcontroller {
     private FXMLLoader pieloader;
     private FXMLLoader barloader;
     private FXMLLoader statloader;
+    private FXMLLoader startloader;
     
     private AnchorPane linepane;
     private AnchorPane piepane;
     private AnchorPane barpane;
     private AnchorPane statpane;
+    private AnchorPane startpane;
     
     private lineviewlayoutcontroller linecontroller;
 	private pieviewlayoutcontroller piecontroller;
 	private barviewlayoutcontroller barcontroller;
 	private statviewlayoutcontroller statcontroller;
+	private startlayoutcontroller startcontroller;
     
-    private String selectedtime = "3 Years";
+    private String selectedtime = "8 Years";
     private String selectedmodel = "Exponential Model";
     private boolean competitive = false;
     private boolean selectedgrass = true;
     private boolean selectedpredator = false;
+    private boolean startstatus = true;
     
     private int wolfcount;
     
@@ -195,7 +199,7 @@ public class rootcontroller {
     	
     	//loading configuration
     	loaddrawingboard();
-    	loadview(lineloader, linepane);  
+    	loadview(startloader, startpane);  
     	checkboxconfig();
     	spawncombobox(); 
     	modelsearch();
@@ -269,12 +273,15 @@ public class rootcontroller {
         barloader = new FXMLLoader();
         barloader.setLocation(getClass().getResource("/view/barviewlayout.fxml"));
         statloader = new FXMLLoader();
-        statloader.setLocation(getClass().getResource("/view/statviewlayout.fxml"));      
+        statloader.setLocation(getClass().getResource("/view/statviewlayout.fxml"));  
+        startloader = new FXMLLoader();
+        startloader.setLocation(getClass().getResource("/view/startlayout.fxml"));
                 
         linepane = (AnchorPane) lineloader.load();
         piepane = (AnchorPane) pieloader.load();
         barpane = (AnchorPane) barloader.load();
         statpane = (AnchorPane) statloader.load(); 	 
+        startpane = (AnchorPane) startloader.load(); 
     }
 
     
@@ -287,6 +294,10 @@ public class rootcontroller {
     @FXML
     private void startsimulation()
     {
+    	if (startstatus)
+    	{
+    		loadview(lineloader, linepane);  
+    	}
     	clearsimulation();
     	competitive = false;
     	if (selectedmodel.equalsIgnoreCase("Competitive Model"))
@@ -594,21 +605,25 @@ public class rootcontroller {
     private void handlelineView()   
     {
     	loadview(lineloader, linepane);
+    	startstatus = false;
     }
     @FXML
     private void handlepieView()   
     {
     	loadview(pieloader, piepane);
+    	startstatus = false;
     }
     @FXML
     private void handlebarView()   
     {
     	loadview(barloader, barpane);
+    	startstatus = false;
     }
     @FXML
     private void handlestatView()   
     {
     	loadview(statloader, statpane);
+    	startstatus = false;
     }
   
     
@@ -687,7 +702,7 @@ public class rootcontroller {
     {
     	timebox.setItems(timeoptions);
     	timebox.setVisibleRowCount(5);
-    	timebox.setValue("3 Years");
+    	timebox.setValue("8 Years");
     	timebox.setOnAction(timeevent);
     	
     	modelbox.setVisibleRowCount(5);

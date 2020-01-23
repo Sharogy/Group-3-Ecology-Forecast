@@ -42,7 +42,7 @@ import Util.Settings;
 			return carryingcapacity;
 		}
 		
-		public static double getCarrycapacity(Animal ani, List<Animal> animallist, boolean grassmode) {
+		public double getCarrycapacity(Animal ani, List<Animal> animallist, boolean grassmode) {
 			if (grassmode)
 			{
 				calculate(animallist);

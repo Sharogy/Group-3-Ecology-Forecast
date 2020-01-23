@@ -50,9 +50,9 @@ public class Competitive_Model implements imodel{
 		oldanipop = population.get(1);
 		oldanipop2 = population.get(2);
 		oldanipop3 = population.get(0);
-		
-		k1 = CarryingCapacity_Model.getCarrycapacity(animallist.get(1), animallist, grassmode);
-		k2 = CarryingCapacity_Model.getCarrycapacity(animallist.get(2), animallist, grassmode);
+		CarryingCapacity_Model ccm = new CarryingCapacity_Model();
+		k1 = ccm.getCarrycapacity(animallist.get(1), animallist, grassmode);
+		k2 = ccm.getCarrycapacity(animallist.get(2), animallist, grassmode);
 				
 		ne1 = 200;
 		ne2 = 850;
@@ -66,8 +66,8 @@ public class Competitive_Model implements imodel{
 		double factor2 = (animallist.get(2).getBirthrate()-animallist.get(2).getDeathrate())/k2;
 		newanipop2 = oldanipop2 + factor2*oldanipop2*(k2-oldanipop*a21-oldanipop2);
 		
-		k1 = CarryingCapacity_Model.getCarrycapacity(animallist.get(1), animallist, grassmode) + CarryingCapacity_Model.getCarrycapacity(animallist.get(2), animallist, grassmode);
-		k2 = CarryingCapacity_Model.getCarrycapacity(animallist.get(0), animallist, grassmode);
+		k1 = ccm.getCarrycapacity(animallist.get(1), animallist, grassmode) + ccm.getCarrycapacity(animallist.get(2), animallist, grassmode);
+		k2 = ccm.getCarrycapacity(animallist.get(0), animallist, grassmode);
 		//System.out.println(k2);
 		
 		ne1 = 200+850;
@@ -152,7 +152,8 @@ public class Competitive_Model implements imodel{
 		else
 		{
 			Exponential_Model em = new Exponential_Model();
-			animalpop = em.calculate(animallist, ani, timeperiod, grassmode, predatormode);
+			animalpop = em.calculate(animallist, ani, timeperiod, false, predatormode);
+			
 			//System.out.println(ani.getName());
 		}
 		
@@ -177,7 +178,7 @@ public class Competitive_Model implements imodel{
 		//System.out.println(popoutcome.size());
 		for (int i = 0; i< popoutcome.size(); i++)
 		{
-			//System.out.println(popoutcome.get(i));
+			System.out.println(popoutcome.get(i));
 		}
 		//System.out.println(popoutcome);
 	}
