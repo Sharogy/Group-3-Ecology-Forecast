@@ -42,6 +42,9 @@ public class lineviewlayoutcontroller implements icontroller {
     
     public  XYChart.Series series;
     public  String test = "test string";
+    
+    public List<List<Integer>> anidata2 = new ArrayList<List<Integer>>();
+    public List<Integer> predator = new ArrayList<Integer>();
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -70,7 +73,7 @@ public class lineviewlayoutcontroller implements icontroller {
     }
     
     
-    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int packcount, boolean competitive)
+    public void spawndata(ObservableList<Animal> animallist, int timeperiod, imodel im, boolean grassmode, boolean predatormode, int wolfcount, boolean competitive)
     {
     	List<Integer> anidata = null;
     	if (predatormode == false)
@@ -78,6 +81,7 @@ public class lineviewlayoutcontroller implements icontroller {
     		for (int j = 0; j < animallist.size(); j++)
         	{
        			anidata = im.calculate(animallist, animallist.get(j), timeperiod, grassmode, predatormode);
+       			anidata2.add(anidata);
            	
             	series = new Series<String, Number>();
                 series.setName(animallist.get(j).getName());
@@ -87,16 +91,19 @@ public class lineviewlayoutcontroller implements icontroller {
              		series.getData().add(new XYChart.Data(year, anidata.get(i)));
              		//System.out.println(anidata.get(i));
              	}         	
-             	linechart.getData().add(series);        	
+             	linechart.getData().add(series);  
+             	
         	}
     	}
     	if (predatormode == true)
     	{
     		Predator_Model pm = new Predator_Model();
-    		List<List<Integer>> anidata2 = pm.calculate(animallist, timeperiod, grassmode, im, packcount, competitive);
+    		anidata2 = pm.calculate(animallist, timeperiod, grassmode, im, wolfcount, competitive);
     		//System.out.println(anidata2.get(0));
     		List<Animal> newanimallist = new ArrayList<Animal>();
-    		List<Integer> predator = pm.getPredPopulation();   
+    		predator = pm.getPredPopulation();   
+    		//System.out.println(anidata2.get(0));
+    		//System.out.println(predator);
     		anidata2.add(predator);
     		for (Animal ani: animallist)
     		{
@@ -147,8 +154,13 @@ public class lineviewlayoutcontroller implements icontroller {
      * 
      * @param persons
      */
-    public void setAnimalData(List<Animal> animal) {
-
+    public List<List<Integer>> getAnimalData() {
+    	return anidata2;
+    }
+    
+    public List<Integer> getPredatorData() 
+    {
+    	return predator;
     }
     
     

@@ -11,7 +11,7 @@ public class Settings {
 	
 	public static String predatorname = "Gray Wolves";
 	public static int predatornumber = 20;
-	public static double predatorconsumption = 7/2.2046;
+	public static double predatorconsumption = 3.175;
 	public static double predatorbirth = 0.32;
 	public static double predatordeath = 0.18;
 	public static int predatoravgweight = 39;

@@ -167,6 +167,9 @@ public class rootcontroller {
     private String theme = getClass().getResource("/themes/modena.css").toExternalForm();
     private String theme1 = getClass().getResource("/themes/caspian.css").toExternalForm();
     private String theme2 = getClass().getResource("/themes/Darktheme.css").toExternalForm();
+    
+    private List<List<Integer>> animaldata;
+    private List<Integer> preddata;
   
     /**
      * The constructor.
@@ -316,7 +319,10 @@ public class rootcontroller {
 		    	linecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
 		    	piecontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
 		    	barcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);
-		    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);  		 	
+		    	statcontroller.spawndata(animallist, timeperiod, im, selectedgrass, selectedpredator, wolfcount, competitive);      
+		    	animaldata = linecontroller.getAnimalData();
+		    	preddata = linecontroller.getPredatorData();
+		    	
     	}
     	catch (NumberFormatException e)
     	{
@@ -556,6 +562,30 @@ public class rootcontroller {
     		}
     		da.saveAnimalDataToFile(file, animallist);
     	}    	
+    }
+    
+    @FXML
+    private void handleSaveresult()
+    {
+    	FileChooser fileChooser = new FileChooser();
+    	
+    	fileChooser.setInitialDirectory(da.getAnimalFilePath());
+
+    	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.xlsx)", "*.xlsx");
+    	fileChooser.getExtensionFilters().add(extFilter);
+    	
+    	File file = fileChooser.showSaveDialog(main.getPrimaryStage());
+    	
+    	if (file!=null)
+    	{
+    		if (!file.getPath().endsWith(".xlsx"))
+    		{
+    			file = new File(file.getPath() + ".xlsx");
+    		}
+
+    		da.saveResultToFile(file, animallist, timeperiod, animaldata, preddata);
+    		
+    	}    
     }
     
     

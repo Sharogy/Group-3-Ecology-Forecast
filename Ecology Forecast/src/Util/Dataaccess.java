@@ -1,6 +1,7 @@
 package Util;
 
 import java.io.File;
+import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -86,5 +87,30 @@ public class Dataaccess {
             prefs.remove("filePath");
         }
     }
+
+	public void saveResultToFile(File file, ObservableList<Animal> animallist, int timeperiod,
+			List<List<Integer>> animaldata, List<Integer> preddata) {
+		try {
+    		
+    		Resultwriter.setpath(file.getAbsolutePath());    	
+    		Resultwriter.writeData(animallist, timeperiod, animaldata, preddata);
+        
+
+    		
+    		// Save the file path to the registry.
+    		//setAnimalFilePath(file);
+                     
+        } catch (Exception e) { // catches ANY exception
+        	System.out.println(e);
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not save data");
+            alert.setContentText("Could not save data to file:\n" + file.getPath());
+
+            alert.showAndWait();
+        }
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -130,6 +130,10 @@ public class Predator_Model {
 					//System.out.println(currentanimalcount);
 					int time = i+1;
 					Animal currentanimal = animallist.get(j);
+					if (currentanimal.getName().equalsIgnoreCase("Red Deer"))
+					{
+						currentdeercount = currentanimalcount.get(i);
+					}
 					double currentanimalmeatweight = currentanimal.getAvgweight()*2/3;
 					double eaten = requirement*currentanimalcount.get(i)*currentanimal.getPreylikelihood()/primaryanimalcount/currentanimalmeatweight;
 					
@@ -189,7 +193,7 @@ public class Predator_Model {
 		Logistic_Model im2 = new Logistic_Model();
 		Predator_Model pm = new Predator_Model();
 		//popoutcome2 = im.calculate(anilist, anilist.get(0), 10, false, false);
-		popoutcome = pm.calculate(anilist, 30, true, im, 10, true);
+		popoutcome = pm.calculate(anilist, 30, true, im, 10, false);
 		//popoutcome2 = pm.calculate(anilist, 15, true, im2, 20, false);
 		List<Integer> pred = pm.getPredPopulation();
 		

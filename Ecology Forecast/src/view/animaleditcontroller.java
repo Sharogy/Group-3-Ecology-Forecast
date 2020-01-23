@@ -98,6 +98,8 @@ public class animaleditcontroller {
         	 Predator pred = (Predator) ianimal;
         	 nameField.setText(pred.getName());
         	 nameField.setEditable(false);
+        	 nameField.setMouseTransparent(true);
+        	 nameField.setFocusTraversable(false);
              totalField.setVisible(false);
              growthField.setText(String.valueOf(pred.getBirthrate()));
              deathField.setText(String.valueOf(pred.getDeathrate()));

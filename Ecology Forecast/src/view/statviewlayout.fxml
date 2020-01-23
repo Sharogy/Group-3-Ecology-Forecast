@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.statviewlayoutcontroller">
    <children>
-      <TableView fx:id="stattable" layoutX="314.0" layoutY="153.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label text="Current Model =" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="50.0" />
+      <Label text="Grass Model =" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="300.0" />
+      <Label text="Predator Model =" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="550.0" />
+      <Label fx:id="modellabel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="150.0" />
+      <Label fx:id="grasslabel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="400.0" />
+      <Label fx:id="predatorlabel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="650.0" />
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="50.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="279.0" prefWidth="898.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label layoutX="372.0" layoutY="6.0" text="Animal Population Prediction" />
+                  <TableView fx:id="stattable" layoutY="30.0" prefHeight="341.0" prefWidth="900.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="stattable2" prefHeight="371.0" prefWidth="900.0" AnchorPane.topAnchor="30.0" />
+                  <Label layoutX="387.0" layoutY="6.0" text="Animal Population Data" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>
