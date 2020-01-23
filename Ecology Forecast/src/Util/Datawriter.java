@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Datawriter {
 
-    private static String[] columns = {"Name", "Pop", "Growth", "Death", "Consumption"};
+    private static String[] columns = {"Name", "Pop", "Birth", "Death", "Consumption", "AvgWeight", "CarryingCapacity", "Type", "PreyLikelihood", "Notes"};
     private static String outputpath = "poi-generated-file.xlsx";
 
 	// Initializing employees data to insert into the excel file   
@@ -63,7 +63,7 @@ public class Datawriter {
         	
         	row.createCell(1).setCellValue(animal.getNumber());
         	
-        	row.createCell(2).setCellValue(animal.getGrowthrate());
+        	row.createCell(2).setCellValue(animal.getBirthrate());
         	
         	row.createCell(3).setCellValue(animal.getDeathrate());
         	
@@ -71,9 +71,13 @@ public class Datawriter {
         	
         	row.createCell(5).setCellValue(animal.getAvgweight());
         	
-        	row.createCell(6).setCellValue(animal.getNotes());
+        	row.createCell(6).setCellValue(animal.getCarrying());
         	
-        	row.createCell(7).setCellValue(animal.getCarrying());
+        	row.createCell(7).setCellValue(animal.getType());
+        	
+        	row.createCell(8).setCellValue(animal.getPreylikelihood());
+        	
+        	row.createCell(9).setCellValue(animal.getNotes());
         }
 
 		// Resize all columns to fit the content size

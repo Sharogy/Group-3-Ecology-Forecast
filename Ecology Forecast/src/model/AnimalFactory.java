@@ -37,7 +37,7 @@ public class AnimalFactory {
 			{	
 				//System.out.println(data[i][7]);
 				//Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7], i, data[i][8]);
-				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Double.parseDouble(data[i][5]), Integer.parseInt(data[i][6]), data[i][7], data[i][8], data[i][9]);
+				Animal ani = new Animal(data[i][0], Integer.parseInt(data[i][1]), Double.parseDouble(data[i][2]), Double.parseDouble(data[i][3]), Double.parseDouble(data[i][4]), Integer.parseInt(data[i][5]), Integer.parseInt(data[i][6]), data[i][7], Double.parseDouble(data[i][8]), data[i][9]);
 				//Animal ani = new Animal();
 				animallist.add(ani);			
 			}
@@ -59,7 +59,7 @@ public class AnimalFactory {
 		while (iter.hasNext())
 		{
 			Animal ani = iter.next();
-			System.out.println(ani.getName());
+			System.out.println(ani.getCarrying());
 		}
 	}
 

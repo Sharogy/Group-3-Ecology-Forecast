@@ -3,8 +3,6 @@ package math;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oracle.webservices.internal.api.EnvelopeStyle;
-
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -62,10 +60,10 @@ public class Competitive_Model implements imodel{
 		a12 = (k1-ne1)/ne2;
 		a21 = (k2-ne2)/ne1;
 		
-		double factor1 = (animallist.get(1).getGrowthrate()-animallist.get(1).getDeathrate())/k1;
+		double factor1 = (animallist.get(1).getBirthrate()-animallist.get(1).getDeathrate())/k1;
 		newanipop = oldanipop + factor1*oldanipop*(k1-oldanipop-oldanipop2*a12);
 		
-		double factor2 = (animallist.get(2).getGrowthrate()-animallist.get(2).getDeathrate())/k2;
+		double factor2 = (animallist.get(2).getBirthrate()-animallist.get(2).getDeathrate())/k2;
 		newanipop2 = oldanipop2 + factor2*oldanipop2*(k2-oldanipop*a21-oldanipop2);
 		
 		k1 = CarryingCapacity_Model.getCarrycapacity(animallist.get(1), animallist, grassmode) + CarryingCapacity_Model.getCarrycapacity(animallist.get(2), animallist, grassmode);
@@ -80,7 +78,7 @@ public class Competitive_Model implements imodel{
 		
 		double oldanipoptemp = oldanipop + oldanipop2;
 		
-		double factor3 = (animallist.get(0).getGrowthrate() - animallist.get(0).getDeathrate())/k2;
+		double factor3 = (animallist.get(0).getBirthrate() - animallist.get(0).getDeathrate())/k2;
 		newanipop3 = oldanipop3 + factor3*oldanipop3*(k2-oldanipoptemp*a21-oldanipop3);
 		
 		animalpop.add((int) Math.round(newanipop3));

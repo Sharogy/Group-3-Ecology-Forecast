@@ -89,7 +89,7 @@ public class pieviewlayoutcontroller implements icontroller {
     		Predator_Model pm = new Predator_Model();
     		List<List<Integer>> anidata = pm.calculate(animallist, timeperiod, grassmode, im, packcount, competitive);
     		anidata.add(pm.getPredPopulation());
-    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0.0, 0, null, null, null);
+    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0, 0, null, 0.0, null);
     		ObservableList<Animal> anilist = FXCollections.observableArrayList();
     		for (int i = 0; i<animallist.size(); i++)
     		{

@@ -20,6 +20,7 @@ import view.animaleditcontroller;
 import view.deletelayoutcontroller;
 import view.rootcontroller;
 import Util.AlertBox;
+import interfaces.ianimal;
 import model.Animal;
 import model.AnimalFactory;
 import java.util.Iterator;
@@ -107,7 +108,7 @@ public class Main extends Application {
         }
     }
     
-    public boolean showEditAnimals(Animal animal)
+    public boolean showEditAnimals(ianimal animal)
     {
     	try
     	{

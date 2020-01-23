@@ -18,10 +18,6 @@ public class modelfactory {
 		{
 			return new Competitive_Model();
 		}
-		if (modeltype.equalsIgnoreCase("Predator Model"))
-		{
-			return new Competitive_Model();
-		}
 		if (modeltype.equalsIgnoreCase("Logistic Model"))
 		{
 			return new Logistic_Model();

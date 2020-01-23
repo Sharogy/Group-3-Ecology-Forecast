@@ -1,5 +1,6 @@
 package model;
 
+import interfaces.ianimal;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -7,44 +8,37 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Animal {
+public class Animal implements ianimal {
 	
 	private StringProperty name;
 	private IntegerProperty total;
-	private DoubleProperty growthrate;
+	private DoubleProperty birthrate;
 	private DoubleProperty deathrate;
 	private DoubleProperty consumptionrate;
-	private DoubleProperty avgweight;
+	private IntegerProperty avgweight;
 	private StringProperty type;
 	private StringProperty notes;
 	private IntegerProperty carrying;
-	private IntegerProperty preylikelihood;
+	private DoubleProperty preylikelihood;
 	
 	
 	public Animal()
 	{
-		this(null,0,0,0,0,0,0,null, null, null);
+		this(null,0,0,0,0,0,0,null, 0.0, null);
 	}
 	
-	public Animal(String name, int total, double growth, double death, double consumption, double avgweight, int carrying, String type, String preylikelihood, String notes)
+	public Animal(String name, int total, double growth, double death, double consumption, int avgweight, int carrying, String type, Double preylikelihood, String notes)
 	{
 		this.name = new SimpleStringProperty(name);
 		this.total = new SimpleIntegerProperty(total);
-		this.growthrate = new SimpleDoubleProperty(growth);
+		this.birthrate = new SimpleDoubleProperty(growth);
 		this.deathrate = new SimpleDoubleProperty(death);
 		this.consumptionrate = new SimpleDoubleProperty(consumption);
-		this.avgweight = new SimpleDoubleProperty(avgweight);
+		this.avgweight = new SimpleIntegerProperty(avgweight);
 		this.notes = new SimpleStringProperty(notes);		
 		this.carrying = new SimpleIntegerProperty(carrying);
 		this.type = new SimpleStringProperty(type);
-		if (preylikelihood == null)
-		{
-			this.preylikelihood = new SimpleIntegerProperty(0);
-		}
-		else
-		{
-			this.preylikelihood = new SimpleIntegerProperty(Integer.valueOf(preylikelihood));
-		}
+		this.preylikelihood = new SimpleDoubleProperty(preylikelihood);
 		
 	}
 
@@ -74,17 +68,17 @@ public class Animal {
 		return total;
 	}
 
-	public double getGrowthrate() {
-		return growthrate.get();
+	public double getBirthrate() {
+		return birthrate.get();
 	}
 
-	public void setGrowthrate(double growthrate) {
-		this.growthrate.set(growthrate);
+	public void setBirthrate(double birthrate) {
+		this.birthrate.set(birthrate);
 	}
 	
-	public DoubleProperty growthProperty()
+	public DoubleProperty birthProperty()
 	{
-		return growthrate;
+		return birthrate;
 	}
 
 	public double getDeathrate() {
@@ -113,15 +107,15 @@ public class Animal {
 		return consumptionrate;
 	}
 	
-	public double getAvgweight() {
-		return avgweight.get();
+	public int getAvgweight() {
+		return this.avgweight.get();
 	}
 	
 	public void setAvgweight (int avgweight) {
 		this.avgweight.set(avgweight);
 	}
 	
-	public DoubleProperty avgweightProperty()
+	public IntegerProperty avgweightProperty()
 	{
 		return avgweight;
 	}
@@ -159,15 +153,14 @@ public class Animal {
 	{
 		return notes;
 	}
-	public int getPreylikelihood() {
+	public double getPreylikelihood() {
 		return preylikelihood.get();
 	}
-	public void setPreylikelihood (int preylikelihood) {
+	public void setPreylikelihood (double preylikelihood) {
 		this.preylikelihood.set(preylikelihood);
 	}
-	public IntegerProperty PreylikelihoodProperty()
+	public DoubleProperty PreylikelihoodProperty()
 	{
 		return preylikelihood;
-	}
-	
+	}	
 }

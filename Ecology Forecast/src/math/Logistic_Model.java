@@ -22,7 +22,7 @@ public class Logistic_Model implements imodel{
 	public int precalc(List<Animal> animallist, Animal ani, int population,  int timeperiod, boolean grassmode)
 	{
 		this.oldpop = population;
-		this.Birth = ani.getGrowthrate();
+		this.Birth = ani.getBirthrate();
 		this.Death = ani.getDeathrate();
 		this.animallist = animallist;
 		

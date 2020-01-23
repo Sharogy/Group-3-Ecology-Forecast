@@ -42,6 +42,7 @@ import math.Predator_Model;
 import math.modelfactory;
 import model.Animal;
 import model.AnimalFactory;
+import model.Predator;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -62,6 +63,7 @@ import Util.Dataaccess;
 import Util.Dataminer;
 import Util.Datawriter;
 import application.Main;
+import interfaces.ianimal;
 import interfaces.imodel;
 import Util.AlertBox;
 
@@ -326,16 +328,16 @@ public class rootcontroller {
 
             alert.showAndWait();
     	}	
-    	catch (NullPointerException e)
-		{
-    		Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(main.getPrimaryStage());
-            alert.setTitle("No Animal Data");
-            alert.setHeaderText("No Animal Data Selected");
-            alert.setContentText("Please load the animal data from an existing file or load the preset data.");
-
-            alert.showAndWait();
-		}  
+//    	catch (NullPointerException e)
+//		{
+//    		Alert alert = new Alert(AlertType.WARNING);
+//            alert.initOwner(main.getPrimaryStage());
+//            alert.setTitle("No Animal Data");
+//            alert.setHeaderText("No Animal Data Selected");
+//            alert.setContentText("Please load the animal data from an existing file or load the preset data.");
+//
+//            alert.showAndWait();
+//		}  
     }
     
     @FXML
@@ -387,18 +389,18 @@ public class rootcontroller {
 	@FXML
     private void handleAddAnimal()
     {
-    	Animal tempanimal = new Animal();
+    	ianimal tempanimal = new Animal();
     	addoredit = true;
         boolean okClicked = main.showEditAnimals(tempanimal);
         if (okClicked) {
-            animallist.add(tempanimal);
+            animallist.add((Animal) tempanimal);
         }        
     }
     
     @FXML
     private void handleEditAnimal()
     {
-    	Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+    	ianimal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
     	addoredit = false;
         if (selectedAnimal != null) {
             boolean okClicked = main.showEditAnimals(selectedAnimal);
@@ -410,11 +412,21 @@ public class rootcontroller {
             Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setHeaderText("No animal Selected");
+            alert.setContentText("Please select an animal in the table.");
 
             alert.showAndWait();
         }
+    }
+    @FXML
+    private void handleEditPredator()
+    {
+    	ianimal selectedAnimal = new Predator();
+    	boolean okClicked = main.showEditAnimals(selectedAnimal);
+		if (okClicked)
+		{
+			showAnimalDetails(selectedAnimal);
+		}
     }
     
     @FXML
@@ -439,11 +451,11 @@ public class rootcontroller {
     	}
     }
     
-    private void showAnimalDetails(Animal animal)
+    private void showAnimalDetails(ianimal animal)
     {
     	if (animal != null)
     	{
-    		growthdata.setText(String.valueOf(animal.getGrowthrate()));
+    		growthdata.setText(String.valueOf(animal.getBirthrate()));
     		deathdata.setText(String.valueOf(animal.getDeathrate()));
     		avgweightdata.setText(String.valueOf(animal.getAvgweight()));
     		consumptiondata.setText(String.valueOf(animal.getConsumptionrate()));
@@ -453,6 +465,7 @@ public class rootcontroller {
     	{
     		growthdata.setText("");
     		deathdata.setText("");
+    		avgweightdata.setText("");
     		consumptiondata.setText("");
     	}
     }

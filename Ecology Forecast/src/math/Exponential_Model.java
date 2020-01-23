@@ -20,7 +20,7 @@ public class Exponential_Model implements imodel {
 	{	
 		this.animallist = animallist;
 		this.oldpop = population;
-		this.birth = ani.getGrowthrate();
+		this.birth = ani.getBirthrate();
 		this.death = ani.getDeathrate();
 		this.grassmode = grassmode;
 		double increaseRate = birth - death;

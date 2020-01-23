@@ -9,5 +9,14 @@ public class Settings {
 	public static int area = 4400;
 	public static int maxyield = 60;
 	
+	public static String predatorname = "Gray Wolves";
+	public static int predatornumber = 20;
+	public static double predatorconsumption = 7/2.2046;
+	public static double predatorbirth = 0.32;
+	public static double predatordeath = 0.18;
+	public static int predatoravgweight = 39;
+	
+	
+	
 	//https://www.wintergek.nl/data/lijst-gemiddelde-temperatuur-nederland
 }

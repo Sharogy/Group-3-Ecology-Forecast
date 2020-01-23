@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Animal;
 import model.AnimalFactory;
+import model.Predator;
 import interfaces.imodel;
 
 public class Predator_Model {
@@ -14,23 +15,30 @@ public class Predator_Model {
 	private imodel im;
 	private int packcount;
 	private int oldpredpop;
-	private double predcarryingcapacity = 48.9*55/100;
+	//private double predcarryingcapacity = 48.9*55/100;
+	private double predcarryingcapacity = 45;
 	private double newpredpop;
-	private double predbirth = 0.29;
-	private double preddeath = 0.18;
-	private double consumption = 7/2.2046;
-	private double primarymeatratio = 0.70;
+	private double predbirth;
+	private double preddeath;
+	private double consumption;
+	private double currentdeercount;
 	
 	private static List<Integer> predpopulation;
 		
 	public List<List<Integer>> calculate(List<Animal> animallist, int timeperiod, boolean grassmode, imodel im, int wolfcount, boolean competitive) {
 		// calculates the population for 1 animal for N timesteps, returns a List<Integer>, see Exponential/Logistic model for example
 		
+		Predator pm = new Predator();
+		pm.setNumber(wolfcount);
+		this.predbirth = pm.getBirthrate();
+		this.preddeath = pm.getDeathrate();
+		this.consumption = pm.getConsumptionrate();
+		
 		this.animallist = animallist;
 		this.grassmode = grassmode;
 		this.oldpredpop = wolfcount;
 		this.newpredpop = wolfcount;
-		double requirement = consumption * newpredpop * 365 * primarymeatratio;	
+		double requirement = consumption * newpredpop * 365;	
 		int primarycount = 0;
 		double primaryanimalcount = 0;
 		predpopulation = new ArrayList<Integer>(timeperiod);
@@ -66,9 +74,13 @@ public class Predator_Model {
 			{
 				for (int j = 0; j<primarycount; j++)
 				{
+					
+					
 					List<Integer> currentanimalcount = allanimalpop.get(j);
 					//System.out.println("current animal");
 					//System.out.println(currentanimalcount);
+					
+					
 					
 					List<Integer> temppop = new ArrayList<Integer>();
 					for (int k = 0; k<3; k++)
@@ -79,6 +91,12 @@ public class Predator_Model {
 					//System.out.println(temppop);
 					int time = i+1;
 					Animal currentanimal = primarylist.get(j);
+					
+					if (currentanimal.getName().equalsIgnoreCase("Red Deer"))
+					{
+						currentdeercount = currentanimalcount.get(i);
+					}
+					
 					//System.out.println(currentanimal.getName());
 					double currentanimalmeatweight = currentanimal.getAvgweight()*2/3;
 					double eaten = requirement*temppop.get(j)*currentanimal.getPreylikelihood()/primaryanimalcount/currentanimalmeatweight;
@@ -88,9 +106,11 @@ public class Predator_Model {
 
 					//double nextanipop = im.precalc(animallist, currentanimal, (int) Math.round(currentanimalcount.get(i)), 1, grassmode)-eaten;
 					allanimalpop.get(j).add((int) Math.round(nextanipop));
+					
+					
 				}
 				newpredpop = getPredPop(newpredpop, i+1);
-				requirement = consumption * newpredpop * 365 * primarymeatratio;	
+				requirement = consumption * newpredpop * 365;	
 				predpopulation.add((int) Math.round(newpredpop));
 				primaryanimalcount = 0;
 				for (int j = 0; j<primarycount; j++)
@@ -117,7 +137,7 @@ public class Predator_Model {
 					allanimalpop.get(j).add((int) Math.round(nextanipop));
 				}
 				newpredpop = getPredPop(newpredpop, i+1);
-				requirement = consumption * newpredpop * 365 * primarymeatratio;	
+				requirement = consumption * newpredpop * 365;	
 				predpopulation.add((int) Math.round(newpredpop));
 				primaryanimalcount = 0;
 				for (int j = 0; j<primarycount; j++)
@@ -144,7 +164,8 @@ public class Predator_Model {
 	//calculates the population change for predators, assume growth/death rate of predator is known.
 	{
 		double oldpop =  number;		
-		
+		predcarryingcapacity = currentdeercount/1900*40;
+		//predcarryingcapacity = 35;
 		for (int i = 0; i<timeperiod; i++)
 		{
 			oldpop =  oldpop + (predbirth-preddeath) * oldpop * (1 - oldpop/predcarryingcapacity);
@@ -168,8 +189,8 @@ public class Predator_Model {
 		Logistic_Model im2 = new Logistic_Model();
 		Predator_Model pm = new Predator_Model();
 		//popoutcome2 = im.calculate(anilist, anilist.get(0), 10, false, false);
-		popoutcome = pm.calculate(anilist, 5, true, im, 10, false);
-		popoutcome2 = pm.calculate(anilist, 5, true, im2, 10, false);
+		popoutcome = pm.calculate(anilist, 30, true, im, 10, true);
+		//popoutcome2 = pm.calculate(anilist, 15, true, im2, 20, false);
 		List<Integer> pred = pm.getPredPopulation();
 		
 		//System.out.println(popoutcome.size());
@@ -178,8 +199,8 @@ public class Predator_Model {
 		{
 			List<Integer> anipop = popoutcome.get(i);
 			
-			System.out.println(popoutcome.get(i));
-			System.out.println(popoutcome2.get(i));
+			//System.out.println(popoutcome.get(i));
+			//System.out.println(popoutcome2.get(i));
 		}
 		System.out.println(pred);
 	}

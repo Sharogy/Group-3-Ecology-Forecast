@@ -110,7 +110,7 @@ public class barviewlayoutcontroller implements icontroller {
     				newanimallist.add(ani);
     			}
     		}
-    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0.0, 0, null, null, null);
+    		Animal ani = new Animal("Gray Wolves", 0, 0.0, 0.0, 0.0, 0, 0, null, 0.0, null);
     		newanimallist.add(ani);
     		
 			for (int i = 0; i< newanimallist.size(); i++)
